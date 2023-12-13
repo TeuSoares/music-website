@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Music\Models;
+namespace Domain\Music\Models;
 
 use Domain\User\Models\User;
 use Illuminate\Database\Eloquent\Casts\Attribute;
