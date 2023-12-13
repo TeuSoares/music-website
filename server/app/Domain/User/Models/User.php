@@ -2,6 +2,7 @@
 
 namespace Domain\User\Models;
 
+use Domain\Music\Models\Music;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -19,5 +20,10 @@ class User extends Authenticatable
     protected static function newFactory(): UserFactory
     {
         return UserFactory::new();
+    }
+
+    public function musics()
+    {
+        return $this->hasMany(Music::class);
     }
 }
