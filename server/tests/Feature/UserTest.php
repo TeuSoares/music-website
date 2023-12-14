@@ -25,7 +25,7 @@ class UserTest extends TestCase
 
         $response
             ->assertStatus(201)
-            ->assertJson(['created' => true]);
+            ->assertJson(['message' => 'user created successfully']);
 
         $this->assertDatabaseHas('users', ['email' => $data['email']]);
     }

@@ -2,7 +2,7 @@
 
 namespace Domain\User\Controllers;
 
-use App\Core\Http\Controllers\Controller;
+use App\Core\Controller;
 use Domain\User\Requests\UserRequest;
 use Domain\User\Services\UserService;
 use Illuminate\Http\JsonResponse;
@@ -17,6 +17,6 @@ class UserController extends Controller
     {
         $this->service->createNewUser($request->all());
 
-        return response()->json(['created' => true], 201);
+        return $this->responseMessage('user created successfully', 201);
     }
 }
