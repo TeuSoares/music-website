@@ -2,8 +2,10 @@
 
 namespace Tests\Feature;
 
+use Domain\User\Requests\UserRequest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Validator;
 use Tests\TestCase;
 
 class UserTest extends TestCase
@@ -30,10 +32,10 @@ class UserTest extends TestCase
         $this->assertDatabaseHas('users', ['email' => $data['email']]);
     }
 
-    public function test_if_creating_new_user_fails_return_error(): void
+    public function test_if_creating_new_user_fail_throw_exception(): void
     {
         $data = [
-            'name' => "",
+            'name' => "Teste",
             'email' => "teste@teste.com",
             'password' => 12345678,
             'password_confirmation' => 12345678
@@ -44,5 +46,21 @@ class UserTest extends TestCase
         $response->assertStatus(422);
 
         $this->assertDatabaseMissing('users', ['email' => $data['email']]);
+    }
+
+    public function test_validation_rules_at_create_new_user(): void
+    {
+        $data = [
+            'email' => "teste@teste.com",
+            'password' => 12345678,
+            'password_confirmation' => 12345678
+        ];
+
+        $request = new UserRequest();
+        $rules = $request->rules();
+        $validator = Validator::make($data, $rules);
+        $fails = $validator->fails();
+
+        $this->assertEquals(true, $fails);
     }
 }
