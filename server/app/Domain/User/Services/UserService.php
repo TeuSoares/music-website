@@ -3,7 +3,6 @@
 namespace Domain\User\Services;
 
 use Domain\User\Repositories\UserRepositoryInterface;
-use Illuminate\Validation\ValidationException;
 
 class UserService
 {
@@ -16,7 +15,7 @@ class UserService
         try {
             $this->repository->createNewUser($data);
         } catch (\Exception $e) {
-            throw ValidationException::withMessages(['Failed to create new user. Please try again']);
+            abort(500, 'Failed to create new user. Please try again');
         }
     }
 }

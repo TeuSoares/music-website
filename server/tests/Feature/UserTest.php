@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Domain\User\Models\User;
 use Domain\User\Requests\UserRequest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -34,18 +35,15 @@ class UserTest extends TestCase
 
     public function test_if_creating_new_user_fail_throw_exception(): void
     {
-        $data = [
-            'name' => "Teste",
-            'email' => "teste@teste.com",
-            'password' => 12345678,
-            'password_confirmation' => 12345678
-        ];
+        $user = User::newFactory()->create()->toArray();
 
-        $response = $this->postJson('/api/user', $data);
+        $user['password'] = 12345678;
+        $user['password_confirmation'] = 12345678;
 
-        $response->assertStatus(422);
+        $response = $this->postJson('/api/user', $user);
 
-        $this->assertDatabaseMissing('users', ['email' => $data['email']]);
+        $response->assertStatus(500)
+            ->assertSee('Failed to create new user. Please try again');
     }
 
     public function test_validation_rules_at_create_new_user(): void
