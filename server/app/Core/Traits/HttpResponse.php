@@ -12,7 +12,7 @@ trait HttpResponse
 
     protected function responseBuilder(Builder $query, bool $transform = true, int $http_code = 200): JsonResponse
     {
-        $data = $this->service->filter($query, request()->all())->get();
+        $data = $query->get();
 
         if (!$transform) {
             return response()->json(['data' => $data], $http_code);
@@ -25,7 +25,7 @@ trait HttpResponse
     {
         $per_page = (int)request()->per_page > 0 ? request()->per_page : $this->per_page;
 
-        $data = $this->service->filter($query, request()->all())->paginate($per_page);
+        $data = $query->paginate($per_page);
 
         if (!$transform) {
             return response()->json(['data' => $data], $http_code);
