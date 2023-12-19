@@ -17,6 +17,6 @@ class AuthController extends Controller
     {
         $data = $this->service->login($request->all());
 
-        return $this->responseBuilder($data);
+        return response()->json(['data' => $data]);
     }
 }

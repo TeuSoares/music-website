@@ -32,4 +32,18 @@ class AuthTest extends TestCase
 
         $this->assertAuthenticatedAs($user);
     }
+
+    public function test_user_cannot_login_with_incorrect_password(): void
+    {
+        $user = User::newFactory()->create();
+
+        $response = $this->postJson('/api/login', [
+            'email' => $user->email,
+            'password' => 'invalid-password'
+        ]);
+
+        $response->assertStatus(422);
+
+        $this->assertGuest();
+    }
 }
