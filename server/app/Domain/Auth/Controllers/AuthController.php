@@ -3,9 +3,9 @@
 namespace Domain\Auth\Controllers;
 
 use App\Core\Controller;
+use Domain\Auth\Requests\LoginRequest;
 use Domain\Auth\Services\AuthService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -13,7 +13,7 @@ class AuthController extends Controller
     {
     }
 
-    public function login(Request $request): JsonResponse
+    public function login(LoginRequest $request): JsonResponse
     {
         $data = $this->service->login($request->all());
 
