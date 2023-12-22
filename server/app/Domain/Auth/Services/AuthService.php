@@ -25,4 +25,15 @@ class AuthService
 
         throw ValidationException::withMessages(['authetication' => 'Email or password is incorrect']);
     }
+
+    public function forgotPassword(string $email): string
+    {
+        $status = $this->repository->sendResetLink($email);
+
+        if ($status === 'passwords.sent') {
+            return 'Sent reset link successfully to your mail.';
+        }
+
+        abort(500, 'Error sending reset link');
+    }
 }
