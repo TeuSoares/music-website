@@ -50,6 +50,11 @@ trait HttpResponse
         return response()->json(['message' => $message], $http_code);
     }
 
+    protected function responseMessageWithData(array $data, int $http_code = 200): JsonResponse
+    {
+        return response()->json($data, $http_code);
+    }
+
     protected function responseNoContent(): Response
     {
         return response([], 204);
