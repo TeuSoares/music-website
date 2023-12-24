@@ -1,16 +1,15 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Auth;
 
 use Domain\Auth\Requests\LoginRequest;
 use Domain\User\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
-class AuthTest extends TestCase
+class LoginTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -27,10 +26,8 @@ class AuthTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonStructure([
-                'data' => [
-                    'message',
-                    'token'
-                ]
+                'message',
+                'token'
             ]);
 
         $this->assertAuthenticatedAs($user);
@@ -66,19 +63,31 @@ class AuthTest extends TestCase
         $this->assertEquals(true, $fails);
     }
 
-    public function test_if_mail_is_valid_it_send_mail_to_reset_password(): void
+    public function test_if_user_for_disconnected_with_success(): void
     {
-        Notification::fake();
-
         $user = User::newFactory()->create();
 
-        $response = $this->postJson('/api/forgot-password', [
-            'email' => $user->email
-        ]);
+        Sanctum::actingAs($user);
 
-        $response->assertStatus(200);
-        // ->assertSee('Reset Password')
-        // ->assertSee('E-Mail Address')
-        // ->assertSee('Send Password Reset Link');
+        $response = $this->postJson('/api/logout');
+
+        $response->assertStatus(200)
+            ->assertSee('User logged out with success.');
+
+        $this->refreshApplication();
+
+        $this->assertGuest();
+    }
+
+    public function test_a_user_not_can_logout_if_no_authenticate(): void
+    {
+        $response = $this->postJson('/api/logout');
+
+        $response->assertStatus(401)
+            ->assertExactJson([
+                'message' => 'Unauthenticated.'
+            ]);
+
+        $this->assertGuest();
     }
 }
