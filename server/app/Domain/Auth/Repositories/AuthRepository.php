@@ -11,9 +11,4 @@ class AuthRepository implements AuthRepositoryInterface
     {
         return User::where('email', $email)->first();
     }
-
-    public function sendResetLink(string $email)
-    {
-        return Password::sendResetLink(['email' => $email]);
-    }
 }

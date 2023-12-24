@@ -4,6 +4,7 @@ namespace Domain\Auth\Services;
 
 use Domain\Auth\Repositories\AuthRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;
 
 class AuthService
@@ -28,12 +29,14 @@ class AuthService
 
     public function forgotPassword(string $email): string
     {
-        $status = $this->repository->sendResetLink($email);
+        try {
+            $status = Password::sendResetLink(['email' => $email]);
 
-        if ($status === 'passwords.sent') {
-            return 'Sent reset link successfully to your mail.';
+            if ($status === Password::RESET_LINK_SENT) {
+                return 'Sent reset link successfully to your mail.';
+            }
+        } catch (\Exception $e) {
+            abort(500, 'Error sending reset link');
         }
-
-        abort(500, 'Error sending reset link');
     }
 }
