@@ -7,6 +7,7 @@ use Domain\Auth\Requests\ForgotPasswordRequest;
 use Domain\Auth\Requests\LoginRequest;
 use Domain\Auth\Services\AuthService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -18,7 +19,14 @@ class AuthController extends Controller
     {
         $data = $this->service->login($request->all());
 
-        return response()->json(['data' => $data]);
+        return $this->responseMessageWithData($data);
+    }
+
+    public function logout(Request $request): JsonResponse
+    {
+        $request->user()->tokens()->delete();
+
+        return $this->responseMessage('User logged out with success.');
     }
 
     public function forgotPassword(ForgotPasswordRequest $request): JsonResponse
