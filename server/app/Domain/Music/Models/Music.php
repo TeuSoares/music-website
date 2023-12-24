@@ -2,9 +2,9 @@
 
 namespace Domain\Music\Models;
 
+use App\Core\Model;
 use Domain\User\Models\User;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Model;
 
 class Music extends Model
 {
