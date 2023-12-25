@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::as('auth')->group(function () {
     Route::post('login', [AuthController::class, 'login'])->name('auth.login');
     Route::post('logout', [AuthController::class, 'logout'])->name('auth.logout')->middleware('auth:sanctum');
+    Route::post('register-user', [AuthController::class, 'registerUser'])->name('auth.register-user');
     Route::post('forgot-password', [AuthController::class, 'forgotPassword'])->name('auth.forgot-password');
+    Route::post('reset-password', [AuthController::class, 'resetPassword'])->name('auth.reset-password');
 });
-
-Route::post('user', [UserController::class, 'store'])->name('user.store');

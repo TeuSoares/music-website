@@ -1,16 +1,16 @@
 <?php
 
-namespace Domain\User\Requests;
+namespace Domain\Auth\Requests;
 
 use App\Core\Request;
 
-class UserRequest extends Request
+class ResetPasswordRequest extends Request
 {
     public function rules()
     {
         return [
-            'name'                  => 'required|string',
-            'email'                 => 'required|email|unique:Domain\User\Models\User',
+            'token'                 => 'required',
+            'email'                 => 'required|email|exists:users',
             'password'              => 'required|min:6|max:12|confirmed',
             'password_confirmation' => 'required|min:6|max:12|'
         ];

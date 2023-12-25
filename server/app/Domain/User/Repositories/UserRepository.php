@@ -14,4 +14,14 @@ class UserRepository implements UserRepositoryInterface
     {
         return $this->model->create($data);
     }
+
+    public function getUserByEmail(string $email): User
+    {
+        return $this->model->where('email', $email)->first();
+    }
+
+    public function updateUser(User $user, array $data): bool
+    {
+        return $user->update($data);
+    }
 }

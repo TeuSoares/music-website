@@ -2,13 +2,13 @@
 
 namespace Tests\Feature;
 
+use Domain\Auth\Requests\RegisterUserRequest;
 use Domain\User\Models\User;
-use Domain\User\Requests\UserRequest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Validator;
 use Tests\TestCase;
 
-class UserTest extends TestCase
+class RegisterUserTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -23,7 +23,7 @@ class UserTest extends TestCase
             'password_confirmation' => 12345678
         ];
 
-        $response = $this->postJson('/api/user', $data);
+        $response = $this->postJson('api/register-user', $data);
 
         $response
             ->assertStatus(201)
@@ -34,7 +34,7 @@ class UserTest extends TestCase
 
     public function test_validation_rules_at_create_new_user(): void
     {
-        $request = new UserRequest();
+        $request = new RegisterUserRequest();
         $rules = $request->rules();
         $validator = Validator::make([], $rules);
         $fails = $validator->fails();
@@ -53,7 +53,7 @@ class UserTest extends TestCase
             'password_confirmation' => 12345678
         ];
 
-        $request = new UserRequest();
+        $request = new RegisterUserRequest();
         $rules = $request->rules();
         $validator = Validator::make($data, $rules);
         $fails = $validator->fails();
