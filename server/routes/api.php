@@ -16,10 +16,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::as('auth')->group(function () {
-    Route::post('login', [AuthController::class, 'login'])->name('auth.login');
-    Route::post('logout', [AuthController::class, 'logout'])->name('auth.logout')->middleware('auth:sanctum');
-    Route::post('register-user', [AuthController::class, 'registerUser'])->name('auth.register-user');
-    Route::post('forgot-password', [AuthController::class, 'forgotPassword'])->name('auth.forgot-password');
-    Route::post('reset-password', [AuthController::class, 'resetPassword'])->name('auth.reset-password');
+Route::as('auth.')->group(function () {
+    Route::post('login', [AuthController::class, 'login'])->name('login');
+    Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum')->name('logout');
+    Route::post('register-user', [AuthController::class, 'registerUser'])->name('register-user');
+    Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])->middleware(['auth:sanctum', 'signed'])->name('verification.verify');
+    Route::post('/email/verification-notification', [AuthController::class, 'verificationSend'])->middleware(['auth:sanctum', 'throttle:6,1'])->name('verification.send');
+    Route::post('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password');
+    Route::post('reset-password', [AuthController::class, 'resetPassword'])->name('reset-password');
 });

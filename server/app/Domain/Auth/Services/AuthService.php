@@ -4,10 +4,10 @@ namespace Domain\Auth\Services;
 
 use Domain\User\Models\User;
 use Domain\User\Repositories\UserRepositoryInterface;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class AuthService
 {
@@ -26,10 +26,11 @@ class AuthService
         throw ValidationException::withMessages(['authetication' => 'Email or password is incorrect']);
     }
 
-    public function createNewUser(array $data): void
+    public function registerUser(array $data): void
     {
         try {
-            $this->userRepository->createNewUser($data);
+            $user = $this->userRepository->createNewUser($data);
+            event(new Registered($user));
         } catch (\Exception $e) {
             abort(500, 'Failed to create new user. Please try again');
         }

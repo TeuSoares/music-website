@@ -8,6 +8,7 @@ use Domain\Auth\Requests\LoginRequest;
 use Domain\Auth\Requests\RegisterUserRequest;
 use Domain\Auth\Requests\ResetPasswordRequest;
 use Domain\Auth\Services\AuthService;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -33,9 +34,23 @@ class AuthController extends Controller
 
     public function registerUser(RegisterUserRequest $request): JsonResponse
     {
-        $this->service->createNewUser($request->all());
+        $this->service->registerUser($request->all());
 
-        return $this->responseMessage('user created successfully', 201);
+        return $this->responseMessage('User created successfully.', 201);
+    }
+
+    public function verifyEmail(EmailVerificationRequest $request): JsonResponse
+    {
+        $request->fulfill();
+
+        return $this->responseMessage('E-mail verification successfully.', 200);
+    }
+
+    public function verificationSend(Request $request): JsonResponse
+    {
+        $request->user()->sendEmailVerificationNotification();
+
+        return $this->responseMessage('E-mail resend success.', 200);
     }
 
     public function forgotPassword(ForgotPasswordRequest $request): JsonResponse
