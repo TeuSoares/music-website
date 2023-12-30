@@ -19,7 +19,7 @@ class LoginTest extends TestCase
             'password' => bcrypt($password = '12345678')
         ]);
 
-        $response = $this->postJson('/api/login', [
+        $response = $this->postJson(route('auth.login'), [
             'email' => $user->email,
             'password' => $password
         ]);
@@ -37,7 +37,7 @@ class LoginTest extends TestCase
     {
         $user = User::newFactory()->create();
 
-        $response = $this->postJson('/api/login', [
+        $response = $this->postJson(route('auth.login'), [
             'email' => $user->email,
             'password' => 'invalid-password'
         ]);
@@ -69,7 +69,7 @@ class LoginTest extends TestCase
 
         Sanctum::actingAs($user);
 
-        $response = $this->postJson('/api/logout');
+        $response = $this->postJson(route('auth.logout'));
 
         $response->assertStatus(200)
             ->assertSee('User logged out with success.');
@@ -81,7 +81,7 @@ class LoginTest extends TestCase
 
     public function test_a_user_not_can_logout_if_no_authenticate(): void
     {
-        $response = $this->postJson('/api/logout');
+        $response = $this->postJson(route('auth.logout'));
 
         $response->assertStatus(401)
             ->assertExactJson([

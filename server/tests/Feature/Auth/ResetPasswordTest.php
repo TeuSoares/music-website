@@ -21,7 +21,7 @@ class ResetPasswordTest extends TestCase
 
         $user = User::newFactory()->create();
 
-        $response = $this->postJson('/api/forgot-password', [
+        $response = $this->postJson(route('auth.forgot-password'), [
             'email' => $user->email
         ]);
 
@@ -37,7 +37,7 @@ class ResetPasswordTest extends TestCase
     {
         Notification::fake();
 
-        $response = $this->postJson('/api/forgot-password', [
+        $response = $this->postJson(route('auth.forgot-password'), [
             'email' => 'email@invalid.com'
         ]);
 
@@ -87,7 +87,7 @@ class ResetPasswordTest extends TestCase
     {
         $user = User::newFactory()->create();
 
-        $response = $this->postJson('/api/reset-password', [
+        $response = $this->postJson(route('auth.reset-password'), [
             'token' => 'token-invalid',
             'email' => $user->email,
             'password' => 12345678,
@@ -109,7 +109,7 @@ class ResetPasswordTest extends TestCase
 
         $token = Password::createToken($user);
 
-        $response = $this->postJson('/api/reset-password', [
+        $response = $this->postJson(route('auth.reset-password'), [
             'token' => $token,
             'email' => $user->email,
             'password' => 12345678,

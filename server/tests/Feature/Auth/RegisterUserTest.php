@@ -4,7 +4,9 @@ namespace Tests\Feature;
 
 use Domain\Auth\Requests\RegisterUserRequest;
 use Domain\User\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Validator;
 use Tests\TestCase;
 
@@ -16,6 +18,8 @@ class RegisterUserTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
+        Event::fake();
+
         $data = [
             'name' => "Mateus",
             'email' => "teste@teste.com",
@@ -23,11 +27,13 @@ class RegisterUserTest extends TestCase
             'password_confirmation' => 12345678
         ];
 
-        $response = $this->postJson('api/register-user', $data);
+        $response = $this->postJson(route('auth.register-user'), $data);
 
         $response
             ->assertStatus(201)
-            ->assertJson(['message' => 'user created successfully']);
+            ->assertJson(['message' => 'User created successfully.']);
+
+        Event::assertDispatched(Registered::class);
 
         $this->assertDatabaseHas('users', ['email' => $data['email']]);
     }
