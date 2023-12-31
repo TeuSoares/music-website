@@ -3,16 +3,19 @@
 namespace Tests\Feature;
 
 use Domain\Auth\Requests\RegisterUserRequest;
-use Domain\User\Models\User;
+
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Validator;
+
 use Tests\TestCase;
+use Tests\Traits\UserTrait;
+use Tests\Traits\ValidationTrait;
 
 class RegisterUserTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, UserTrait, WithFaker, ValidationTrait;
 
     public function test_create_user_retun_success(): void
     {
@@ -20,11 +23,13 @@ class RegisterUserTest extends TestCase
 
         Event::fake();
 
+        $password = $this->faker->password(6, 12);
+
         $data = [
-            'name' => "Mateus",
-            'email' => "teste@teste.com",
-            'password' => 12345678,
-            'password_confirmation' => 12345678
+            'name' => $this->faker->name,
+            'email' => $this->faker->email,
+            'password' => $password,
+            'password_confirmation' => $password
         ];
 
         $response = $this->postJson(route('auth.register-user'), $data);
@@ -40,29 +45,25 @@ class RegisterUserTest extends TestCase
 
     public function test_validation_rules_at_create_new_user(): void
     {
-        $request = new RegisterUserRequest();
-        $rules = $request->rules();
-        $validator = Validator::make([], $rules);
-        $fails = $validator->fails();
+        $fails = $this->checkIfExistsValidationError(new RegisterUserRequest);
 
         $this->assertEquals(true, $fails);
     }
 
     public function test_if_email_already_exist_return_error(): void
     {
-        $user = User::newFactory()->create()->toArray();
+        $user = $this->createNewUser();
+
+        $password = $this->faker->password(6, 12);
 
         $data = [
-            'name' => 'test',
-            'email' => $user['email'],
-            'password' => 12345678,
-            'password_confirmation' => 12345678
+            'name' => $this->faker->name,
+            'email' => $user->email,
+            'password' => $password,
+            'password_confirmation' => $password
         ];
 
-        $request = new RegisterUserRequest();
-        $rules = $request->rules();
-        $validator = Validator::make($data, $rules);
-        $fails = $validator->fails();
+        $fails = $this->checkIfExistsValidationError(new RegisterUserRequest, $data);
 
         $this->assertEquals(true, $fails);
     }

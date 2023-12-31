@@ -3,19 +3,20 @@
 namespace Tests\Feature\Auth;
 
 use Domain\Auth\Requests\LoginRequest;
-use Domain\User\Models\User;
+
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Validator;
-use Laravel\Sanctum\Sanctum;
+
 use Tests\TestCase;
+use Tests\Traits\UserTrait;
+use Tests\Traits\ValidationTrait;
 
 class LoginTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, UserTrait, ValidationTrait;
 
     public function test_user_can_login_with_correct_credentials(): void
     {
-        $user = User::newFactory()->create([
+        $user = $this->createNewUserCustom([
             'password' => bcrypt($password = '12345678')
         ]);
 
@@ -35,7 +36,7 @@ class LoginTest extends TestCase
 
     public function test_user_cannot_login_with_incorrect_password(): void
     {
-        $user = User::newFactory()->create();
+        $user = $this->createNewUser();
 
         $response = $this->postJson(route('auth.login'), [
             'email' => $user->email,
@@ -55,19 +56,14 @@ class LoginTest extends TestCase
 
     public function test_validation_rules_at_attempt_login(): void
     {
-        $request = new LoginRequest();
-        $rules = $request->rules();
-        $validator = Validator::make([], $rules);
-        $fails = $validator->fails();
+        $fails = $this->checkIfExistsValidationError(new LoginRequest);
 
         $this->assertEquals(true, $fails);
     }
 
     public function test_if_user_for_disconnected_with_success(): void
     {
-        $user = User::newFactory()->create();
-
-        Sanctum::actingAs($user);
+        $this->userAuthenticated();
 
         $response = $this->postJson(route('auth.logout'));
 

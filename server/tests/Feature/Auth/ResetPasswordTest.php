@@ -3,23 +3,25 @@
 namespace Tests\Feature\Auth;
 
 use Domain\Auth\Notifications\ResetPasswordNotification;
-use Domain\User\Models\User;
 use Domain\Auth\Requests\ResetPasswordRequest;
+
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Facades\Validator;
+
 use Tests\TestCase;
+use Tests\Traits\UserTrait;
+use Tests\Traits\ValidationTrait;
 
 class ResetPasswordTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, UserTrait, ValidationTrait;
 
     public function test_if_mail_is_valid_it_send_mail_to_reset_password(): void
     {
         Notification::fake();
 
-        $user = User::newFactory()->create();
+        $user = $this->createNewUser();
 
         $response = $this->postJson(route('auth.forgot-password'), [
             'email' => $user->email
@@ -54,17 +56,14 @@ class ResetPasswordTest extends TestCase
 
     public function test_validation_rules_at_reset_password(): void
     {
-        $request = new ResetPasswordRequest();
-        $rules = $request->rules();
-        $validator = Validator::make([], $rules);
-        $fails = $validator->fails();
+        $fails = $this->checkIfExistsValidationError(new ResetPasswordRequest);
 
         $this->assertEquals(true, $fails);
     }
 
     public function test_should_throw_exception_if_mail_is_invalid(): void
     {
-        $user = User::newFactory()->create();
+        $user = $this->createNewUser();
 
         $token = Password::createToken($user);
 
@@ -75,17 +74,14 @@ class ResetPasswordTest extends TestCase
             'password_confirmation' => 12345678
         ];
 
-        $request = new ResetPasswordRequest();
-        $rules = $request->rules();
-        $validator = Validator::make($data, $rules);
-        $fails = $validator->fails();
+        $fails = $this->checkIfExistsValidationError(new ResetPasswordRequest, $data);
 
         $this->assertEquals(true, $fails);
     }
 
     public function test_if_token_is_invalid_not_should_reset_password(): void
     {
-        $user = User::newFactory()->create();
+        $user = $this->createNewUser();
 
         $response = $this->postJson(route('auth.reset-password'), [
             'token' => 'token-invalid',
@@ -105,7 +101,7 @@ class ResetPasswordTest extends TestCase
 
     public function test_should_reset_password_if_token_and_email_is_valid(): void
     {
-        $user = User::newFactory()->create();
+        $user = $this->createNewUser();
 
         $token = Password::createToken($user);
 

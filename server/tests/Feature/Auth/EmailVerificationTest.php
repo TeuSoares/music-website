@@ -2,25 +2,24 @@
 
 namespace Tests\Feature\Auth;
 
-use Carbon\Carbon;
-use Domain\User\Models\User;
+use Tests\TestCase;
+use Tests\Traits\UserTrait;
+
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\URL;
-use Laravel\Sanctum\Sanctum;
-use Tests\TestCase;
+
+use Carbon\Carbon;
 
 class EmailVerificationTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, UserTrait;
 
     public function test_email_verification_should_return_success(): void
     {
-        $user = User::newFactory()->create();
-
-        Sanctum::actingAs($user);
+        $user = $this->userAuthenticated();
 
         $url_signed = URL::temporarySignedRoute(
             'auth.verification.verify',
@@ -43,9 +42,7 @@ class EmailVerificationTest extends TestCase
 
     public function test_if_not_exists_signature_should_return_error(): void
     {
-        $user = User::newFactory()->create();
-
-        Sanctum::actingAs($user);
+        $user = $this->userAuthenticated();
 
         $response = $this->getJson(route('auth.verification.verify', [
             'id' => $user->id,
@@ -58,9 +55,7 @@ class EmailVerificationTest extends TestCase
 
     public function test_if_id_and_hash_incorrect_not_should_verify_email(): void
     {
-        $user = User::newFactory()->create();
-
-        Sanctum::actingAs($user);
+        $this->userAuthenticated();
 
         $response = $this->getJson(route('auth.verification.verify', [
             'id' => 'id-incorrect',
@@ -72,7 +67,7 @@ class EmailVerificationTest extends TestCase
 
     public function test_if_user_not_authenticated_not_should_verify_email(): void
     {
-        $user = User::newFactory()->create();
+        $user = $this->createNewUser();
 
         $response = $this->getJson(route('auth.verification.verify', [
             'id' => $user->id,
@@ -86,9 +81,7 @@ class EmailVerificationTest extends TestCase
     {
         Notification::fake();
 
-        $user = User::newFactory()->create();
-
-        Sanctum::actingAs($user);
+        $user = $this->userAuthenticated();
 
         $response = $this->postJson(route('auth.verification.send'));
 
