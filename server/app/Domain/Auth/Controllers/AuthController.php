@@ -3,11 +3,13 @@
 namespace Domain\Auth\Controllers;
 
 use App\Core\Controller;
+
 use Domain\Auth\Requests\ForgotPasswordRequest;
 use Domain\Auth\Requests\LoginRequest;
 use Domain\Auth\Requests\RegisterUserRequest;
 use Domain\Auth\Requests\ResetPasswordRequest;
 use Domain\Auth\Services\AuthService;
+
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -43,14 +45,14 @@ class AuthController extends Controller
     {
         $request->fulfill();
 
-        return $this->responseMessage('E-mail verification successfully.', 200);
+        return $this->responseMessage('E-mail verification successfully.');
     }
 
     public function verificationSend(Request $request): JsonResponse
     {
         $request->user()->sendEmailVerificationNotification();
 
-        return $this->responseMessage('E-mail resend success.', 200);
+        return $this->responseMessage('E-mail resend success.');
     }
 
     public function forgotPassword(ForgotPasswordRequest $request): JsonResponse

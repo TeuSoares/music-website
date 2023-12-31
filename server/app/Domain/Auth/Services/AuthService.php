@@ -2,15 +2,19 @@
 
 namespace Domain\Auth\Services;
 
+use App\Core\Traits\ThrowException;
+
 use Domain\User\Models\User;
 use Domain\User\Repositories\UserRepositoryInterface;
+
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Validation\ValidationException;
 
 class AuthService
 {
+    use ThrowException;
+
     public function __construct(protected UserRepositoryInterface $userRepository)
     {
     }
@@ -23,30 +27,24 @@ class AuthService
             return ['token' => $user->createToken('login')->plainTextToken];
         }
 
-        throw ValidationException::withMessages(['authetication' => 'Email or password is incorrect']);
+        $this->throwExceptionValidation(['authetication' => 'Email or password is incorrect']);
     }
 
     public function registerUser(array $data): void
     {
-        try {
-            $user = $this->userRepository->createNewUser($data);
-            event(new Registered($user));
-        } catch (\Exception $e) {
-            abort(500, 'Failed to create new user. Please try again');
-        }
+        $user = $this->userRepository->createNewUser($data);
+        event(new Registered($user));
     }
 
     public function forgotPassword(string $email): bool
     {
-        try {
-            $status = Password::sendResetLink(['email' => $email]);
+        $status = Password::sendResetLink(['email' => $email]);
 
-            if ($status === Password::RESET_LINK_SENT) {
-                return true;
-            }
-        } catch (\Exception $e) {
-            abort(500, 'Error sending reset link');
+        if ($status === Password::RESET_LINK_SENT) {
+            return true;
         }
+
+        $this->throwExceptionHttpResponse('Error sending reset link. Please try again');
     }
 
     public function resetPassword(array $data): bool
@@ -60,7 +58,9 @@ class AuthService
         }
 
         if ($status === Password::INVALID_TOKEN) {
-            throw ValidationException::withMessages(['token' => 'The token selected is invalid.']);
+            $this->throwExceptionValidation(['token' => 'The token selected is invalid.']);
         }
+
+        $this->throwExceptionHttpResponse('Error at reset password. Please try again');
     }
 }
