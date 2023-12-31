@@ -30,7 +30,7 @@ class Handler extends ExceptionHandler
         });
 
         $this->renderable(function (QueryException $e, Request $request) {
-            return response()->json(['error' => 'There was an error making your request. Please try again.'], 500);
+            return response()->json(['error' => ['request' => 'There was an error making your request. Please try again.']], 500);
         });
     }
 }
