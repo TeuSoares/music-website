@@ -1,6 +1,7 @@
 <?php
 
 use Domain\Auth\Controllers\AuthController;
+use Domain\Music\Controllers\MusicController;
 use Domain\User\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -25,3 +26,5 @@ Route::as('auth.')->group(function () {
     Route::post('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password');
     Route::post('reset-password', [AuthController::class, 'resetPassword'])->name('reset-password');
 });
+
+Route::apiResource('music', 'Music\Controllers\MusicController')->middleware('auth:sanctum');
