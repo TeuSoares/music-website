@@ -3,6 +3,9 @@
 namespace App\Boot\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+
+use Domain\Music\Models\Music;
+use Domain\Music\Policies\MusicPolicy;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -18,7 +21,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        //
+        Music::class => MusicPolicy::class,
     ];
 
     /**
