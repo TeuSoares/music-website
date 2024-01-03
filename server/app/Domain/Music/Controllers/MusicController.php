@@ -15,16 +15,15 @@ class MusicController extends Controller
 {
     public function __construct(
         private MusicService $service,
+        protected $resource = MusicResource::class
     ) {
     }
 
-    public function index()
+    public function index(): JsonResponse
     {
         $rows = Music::where('user_id', auth()->user()->id)->get();
 
-        return new MusicResource($rows);
-
-        // return $this->responseDataWithResource($rows);
+        return $this->responseDataWithResource($rows);
     }
 
     public function store(CreateMusicRequest $request): JsonResponse

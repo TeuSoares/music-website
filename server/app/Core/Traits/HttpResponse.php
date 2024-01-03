@@ -15,7 +15,7 @@ trait HttpResponse
 
     protected function responseDataWithResource(Collection $data): JsonResponse
     {
-        return $this->resource::collection($data);
+        return $this->resource::collection($data)->response();
     }
 
     protected function responseMessage(string $message, int $http_code = 200): JsonResponse
