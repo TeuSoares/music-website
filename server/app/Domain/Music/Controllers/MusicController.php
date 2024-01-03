@@ -6,8 +6,8 @@ use Illuminate\Http\JsonResponse;
 
 use App\Core\Controller;
 
-use Domain\Music\Models\Music;
 use Domain\Music\Requests\CreateMusicRequest;
+use Domain\Music\Requests\ListMusicRequest;
 use Domain\Music\Services\MusicService;
 use Domain\Music\Resources\MusicResource;
 
@@ -19,9 +19,9 @@ class MusicController extends Controller
     ) {
     }
 
-    public function index(): JsonResponse
+    public function index(ListMusicRequest $request): JsonResponse
     {
-        $rows = Music::where('user_id', auth()->user()->id)->get();
+        $rows = $this->service->listAllMusics($request->all());
 
         return $this->responseDataWithResource($rows);
     }

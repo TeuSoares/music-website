@@ -17,6 +17,8 @@ class MusicService
     public function listAllMusics(array $params)
     {
         $params['genre'] = (string)($params['genre'] ?? '');
+        $params['artist'] = (string)($params['artist'] ?? '');
+        $params['name'] = (string)($params['name'] ?? '');
 
         return $this->repository->listAllMusicsWithFilters($params);
     }
