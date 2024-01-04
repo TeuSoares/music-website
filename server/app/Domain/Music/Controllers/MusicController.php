@@ -6,6 +6,7 @@ use Illuminate\Http\JsonResponse;
 
 use App\Core\Controller;
 
+use Domain\Music\Repositories\MusicRepositoryInterface;
 use Domain\Music\Requests\CreateMusicRequest;
 use Domain\Music\Requests\ListMusicRequest;
 use Domain\Music\Services\MusicService;
@@ -15,6 +16,7 @@ class MusicController extends Controller
 {
     public function __construct(
         private MusicService $service,
+        private MusicRepositoryInterface $repository,
         protected $resource = MusicResource::class
     ) {
     }
@@ -31,5 +33,14 @@ class MusicController extends Controller
         $this->service->createMusic($request->all());
 
         return $this->responseMessage('Music created with success.', 201);
+    }
+
+    public function show(int $id): JsonResponse
+    {
+        $music = $this->repository->findMusicById($id);
+
+        $this->authorize('view', $music);
+
+        return $this->responseData($music);
     }
 }

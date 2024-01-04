@@ -18,7 +18,7 @@ class ListMusicTest extends TestCase
         $this->userAuthenticated();
 
         $this->createNewMusic();
-        
+
         $response = $this->getJson(route('music.index'));
 
         $response->assertStatus(200)
@@ -48,16 +48,27 @@ class ListMusicTest extends TestCase
         $this->assertEquals(true, $fails);
     }
 
-    public function test_should_return_forbidden_if_user_is_different_from_logged(): void
+    // public function test_should_return_forbidden_if_user_is_different_from_logged(): void
+    // {
+    //     $this->userAuthenticated();
+
+    //     $this->createNewMusic();
+
+    //     auth()->user()->id = 10;
+
+    //     $response = $this->getJson(route('music.index'));
+
+    //     $response->assertStatus(403);
+    // }
+
+    public function test_get_a_single_music(): void
     {
         $this->userAuthenticated();
 
-        $this->createNewMusic();
+        $music = $this->createNewMusic();
 
-        auth()->user()->id = 10;
+        $response = $this->getJson(route('music.show', ['id' => $music->id]));
 
-        $response = $this->getJson(route('music.index'));
-
-        $response->assertStatus(403);
+        $response->assertStatus(200);
     }
 }

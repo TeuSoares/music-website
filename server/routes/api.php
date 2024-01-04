@@ -27,4 +27,4 @@ Route::as('auth.')->group(function () {
     Route::post('reset-password', [AuthController::class, 'resetPassword'])->name('reset-password');
 });
 
-Route::apiResource('music', 'Music\Controllers\MusicController')->middleware('auth:sanctum');
+Route::apiResource('music', 'Music\Controllers\MusicController')->parameter('music', 'id')->middleware('auth:sanctum');

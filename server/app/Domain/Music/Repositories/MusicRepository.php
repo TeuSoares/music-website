@@ -27,13 +27,18 @@ class MusicRepository implements MusicRepositoryInterface
                 $query->where('artist', $artist);
             })
             ->when($name, function ($query) use ($name) {
-                $query->where('name','LIKE',"%{$name}%");
+                $query->where('name', 'LIKE', "%{$name}%");
             })
             ->get();
     }
 
-    public function createNewMusic(array $data)
+    public function createNewMusic(array $data): Music
     {
         return $this->model->create($data);
+    }
+
+    public function findMusicById(int $id): Music
+    {
+        return $this->model->findOrFail($id);
     }
 }
