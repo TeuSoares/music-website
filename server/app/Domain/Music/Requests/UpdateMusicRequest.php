@@ -4,7 +4,7 @@ namespace Domain\Music\Requests;
 
 use App\Core\Request;
 
-class CreateMusicRequest extends Request
+class UpdateMusicRequest extends Request
 {
     public function rules()
     {
@@ -13,7 +13,7 @@ class CreateMusicRequest extends Request
             'genre'        => 'required|string',
             'name'         => 'required|string',
             'link_youtube' => 'required',
-            'thumbnail'    => 'required|file|mimes:jpg,png'
+            'thumbnail'    => 'nullable|file|mimes:jpg,png'
         ];
     }
 
