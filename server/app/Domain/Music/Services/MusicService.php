@@ -4,6 +4,7 @@ namespace Domain\Music\Services;
 
 use App\Core\Traits\ThrowException;
 use Domain\Music\Repositories\MusicRepositoryInterface;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Storage;
 
 class MusicService
@@ -14,13 +15,13 @@ class MusicService
     {
     }
 
-    public function listAllMusics(array $params)
+    public function getAllMusic(array $params): Collection
     {
         $params['genre'] = (string)($params['genre'] ?? '');
         $params['artist'] = (string)($params['artist'] ?? '');
         $params['name'] = (string)($params['name'] ?? '');
 
-        return $this->repository->listAllMusicsWithFilters($params);
+        return $this->repository->getAll($params);
     }
 
     public function createMusic(array $data): void
@@ -32,17 +33,44 @@ class MusicService
         }
 
         try {
-            $this->repository->createNewMusic([
-                'user_id'   => auth()->user()->id,
-                'artist'    => $data['artist'],
-                'genre'     => $data['genre'],
-                'name'      => $data['name'],
-                'link'      => $data['music_id_youtube'],
-                'thumbnail' => $path
+            $this->repository->create([
+                'user_id'    => auth()->user()->id,
+                'artist'     => $data['artist'],
+                'genre'      => $data['genre'],
+                'name'       => $data['name'],
+                'youtube_id' => $data['link_youtube'],
+                'thumbnail'  => $path
             ]);
         } catch (\Exception $e) {
             Storage::delete($path);
             $this->throwExceptionHttpResponse('Failed to create a new music. Please try again.');
+        }
+    }
+
+    public function updateMusic(int $id, array $data): void
+    {
+        if (isset($data['thumbnail'])) {
+            $music = $this->repository->findOne($id);
+
+            Storage::delete($music['thumbnail']);
+
+            $path = $data['thumbnail']->store('musics');
+
+            if (!Storage::exists($path)) {
+                $this->throwExceptionHttpResponse('Failed to update music. Please try again.');
+            }
+
+            $data['thumbnail'] = $path;
+        }
+
+        try {
+            $this->repository->update($id, [
+                ...$data,
+                'youtube_id' => $data['link_youtube'],
+            ]);
+        } catch (\Exception $e) {
+            Storage::delete($path);
+            $this->throwExceptionHttpResponse('Failed to update music. Please try again.');
         }
     }
 }

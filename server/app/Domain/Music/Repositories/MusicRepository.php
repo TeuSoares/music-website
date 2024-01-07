@@ -11,7 +11,7 @@ class MusicRepository implements MusicRepositoryInterface
     {
     }
 
-    public function listAllMusicsWithFilters(array $params): Collection
+    public function getAll(array $params): Collection
     {
         $query = $this->model->where('user_id', auth()->user()->id);
 
@@ -32,13 +32,24 @@ class MusicRepository implements MusicRepositoryInterface
             ->get();
     }
 
-    public function createNewMusic(array $data): Music
+    public function create(array $data): Music
     {
         return $this->model->create($data);
     }
 
-    public function findMusicById(int $id): Music
+    public function findOne(int $id): Music
     {
         return $this->model->findOrFail($id);
+    }
+
+    public function update(int $id, array $data): bool
+    {
+        $music = $this->model->findOrFail($id);
+        return $music->update($data);
+    }
+
+    public function delete(int $id): bool
+    {
+        return $this->model->findOrFail($id)->delete();
     }
 }
