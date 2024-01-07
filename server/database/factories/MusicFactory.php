@@ -24,8 +24,8 @@ class MusicFactory extends Factory
             'artist' => fake()->firstName(),
             'genre' => 'Rock',
             'name' => fake()->sentence(),
-            'link' => '8AHCfZTRGiI',
-            'thumbnail' => fake()->image()
+            'youtube_id' => 'https://www.youtube.com/watch?v=8AHCfZTRGiI',
+            'thumbnail' => 'musics/thumbnail.jpg',
         ];
     }
 }
