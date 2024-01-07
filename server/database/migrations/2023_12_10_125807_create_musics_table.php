@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('artist', 128);
             $table->string('genre', 128);
             $table->string('name', 128);
-            $table->string('link');
+            $table->string('youtube_id', 100);
             $table->string('thumbnail');
             $table->timestamps();
         });
