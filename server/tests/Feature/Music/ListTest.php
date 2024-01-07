@@ -9,7 +9,7 @@ use Tests\Traits\MusicTrait;
 use Tests\Traits\UserTrait;
 use Tests\Traits\ValidationTrait;
 
-class ListMusicTest extends TestCase
+class ListTest extends TestCase
 {
     use UserTrait, MusicTrait, ValidationTrait, RefreshDatabase;
 
@@ -30,7 +30,7 @@ class ListMusicTest extends TestCase
                         'artist',
                         'genre',
                         'name',
-                        'link',
+                        'youtube_id',
                         'thumbnail'
                     ]
                 ]
@@ -48,19 +48,6 @@ class ListMusicTest extends TestCase
         $this->assertEquals(true, $fails);
     }
 
-    // public function test_should_return_forbidden_if_user_is_different_from_logged(): void
-    // {
-    //     $this->userAuthenticated();
-
-    //     $this->createNewMusic();
-
-    //     auth()->user()->id = 10;
-
-    //     $response = $this->getJson(route('music.index'));
-
-    //     $response->assertStatus(403);
-    // }
-
     public function test_get_a_single_music(): void
     {
         $this->userAuthenticated();
@@ -70,5 +57,18 @@ class ListMusicTest extends TestCase
         $response = $this->getJson(route('music.show', ['id' => $music->id]));
 
         $response->assertStatus(200);
+    }
+
+    public function test_should_return_forbidden_if_userId_of_music_is_different_from_user_logged(): void
+    {
+        $user = $this->userAuthenticated();
+
+        $music = $this->createNewMusic();
+
+        $user->id = 10;
+
+        $response = $this->getJson(route('music.show', ['id' => $music->id]));
+
+        $response->assertStatus(403);
     }
 }

@@ -12,7 +12,7 @@ use Tests\TestCase;
 use Tests\Traits\UserTrait;
 use Tests\Traits\ValidationTrait;
 
-class CreateMusicTest extends TestCase
+class CreateTest extends TestCase
 {
     use RefreshDatabase, UserTrait, ValidationTrait;
 
@@ -25,11 +25,11 @@ class CreateMusicTest extends TestCase
         $file = UploadedFile::fake()->image('thumbnail.jpg');
 
         $data = [
-            'artist'           => 'Imagine Dragons',
-            'genre'            => 'Rock',
-            'name'             => 'Believer',
-            'music_id_youtube' => '7wtfhZwyrcc',
-            'thumbnail'        => $file
+            'artist'       => 'Imagine Dragons',
+            'genre'        => 'Rock',
+            'name'         => 'Believer',
+            'link_youtube' => 'https://www.youtube.com/watch?v=7wtfhZwyrcc',
+            'thumbnail'    => $file
         ];
 
         $response = $this->postJson(route('music.store'), $data);
@@ -43,11 +43,11 @@ class CreateMusicTest extends TestCase
         Storage::assertExists($path);
 
         $this->assertDatabaseHas('musics', [
-            'artist'    => 'Imagine Dragons',
-            'genre'     => 'Rock',
-            'name'      => 'Believer',
-            'link'      => 'https://www.youtube.com/embed/7wtfhZwyrcc',
-            'thumbnail' => $path
+            'artist'     => 'Imagine Dragons',
+            'genre'      => 'Rock',
+            'name'       => 'Believer',
+            'youtube_id' => '7wtfhZwyrcc',
+            'thumbnail'  => $path
         ]);
     }
 
@@ -58,11 +58,11 @@ class CreateMusicTest extends TestCase
         $file = UploadedFile::fake()->image('thumbnail.jpg');
 
         $data = [
-            'artist'           => 'Imagine Dragons',
-            'genre'            => 'Rock',
-            'name'             => 'Believer',
-            'music_id_youtube' => '7wtfhZwyrcc',
-            'thumbnail'        => $file
+            'artist'       => 'Imagine Dragons',
+            'genre'        => 'Rock',
+            'name'         => 'Believer',
+            'link_youtube' => 'https://www.youtube.com/embed/7wtfhZwyrcc',
+            'thumbnail'    => $file
         ];
 
         $response = $this->postJson(route('music.store'), $data);
@@ -75,11 +75,11 @@ class CreateMusicTest extends TestCase
         Storage::assertMissing($path);
 
         $this->assertDatabaseMissing('musics', [
-            'artist'    => 'Imagine Dragons',
-            'genre'     => 'Rock',
-            'name'      => 'Believer',
-            'link'      => 'https://www.youtube.com/embed/7wtfhZwyrcc',
-            'thumbnail' => $path
+            'artist'     => 'Imagine Dragons',
+            'genre'      => 'Rock',
+            'name'       => 'Believer',
+            'youtube_id' => '7wtfhZwyrcc',
+            'thumbnail'  => $path
         ]);
     }
 
@@ -95,11 +95,11 @@ class CreateMusicTest extends TestCase
         $file = UploadedFile::fake()->create('document.pdf');
 
         $data = [
-            'artist'           => 'Imagine Dragons',
-            'genre'            => 'Rock',
-            'name'             => 'Believer',
-            'music_id_youtube' => '7wtfhZwyrcc',
-            'thumbnail'        => $file
+            'artist'       => 'Imagine Dragons',
+            'genre'        => 'Rock',
+            'name'         => 'Believer',
+            'link_youtube' => 'https://www.youtube.com/embed/7wtfhZwyrcc',
+            'thumbnail'    => $file
         ];
 
         $fails = $this->checkIfExistsValidationError(new CreateMusicRequest, $data);
@@ -112,11 +112,11 @@ class CreateMusicTest extends TestCase
         $file = UploadedFile::fake()->image('image.gif');
 
         $data = [
-            'artist'           => 'Imagine Dragons',
-            'genre'            => 'Rock',
-            'name'             => 'Believer',
-            'music_id_youtube' => '7wtfhZwyrcc',
-            'thumbnail'        => $file
+            'artist'       => 'Imagine Dragons',
+            'genre'        => 'Rock',
+            'name'         => 'Believer',
+            'link_youtube' => 'https://www.youtube.com/embed/7wtfhZwyrcc',
+            'thumbnail'    => $file
         ];
 
         $fails = $this->checkIfExistsValidationError(new CreateMusicRequest, $data);
