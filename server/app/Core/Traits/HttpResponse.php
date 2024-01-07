@@ -2,8 +2,8 @@
 
 namespace App\Core\Traits;
 
-use Domain\Music\Models\Music;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 
@@ -19,7 +19,7 @@ trait HttpResponse
         return $this->resource::collection($data)->response();
     }
 
-    protected function responseDataWithResource(Music $data): JsonResponse
+    protected function responseDataWithResource(Model $data): JsonResponse
     {
         return (new $this->resource($data))->response();
     }
