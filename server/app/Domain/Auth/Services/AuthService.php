@@ -22,7 +22,8 @@ class AuthService
     public function login(array $credentials): array
     {
         if (Auth::attempt($credentials)) {
-            $user = $this->userRepository->getUserByEmail($credentials['email']);
+            /** @var \Domain\User\Models\User $user **/
+            $user = Auth::user();
 
             return ['token' => $user->createToken('login')->plainTextToken];
         }
@@ -32,7 +33,7 @@ class AuthService
 
     public function registerUser(array $data): void
     {
-        $user = $this->userRepository->createNewUser($data);
+        $user = $this->userRepository->create($data);
         event(new Registered($user));
     }
 
@@ -50,7 +51,7 @@ class AuthService
     public function resetPassword(array $data): bool
     {
         $status = Password::reset($data, function (User $user, string $password) {
-            $this->userRepository->updateUser($user, ['password' => $password]);
+            $this->userRepository->update($user->id, ['password' => $password]);
         });
 
         if ($status === Password::PASSWORD_RESET) {
