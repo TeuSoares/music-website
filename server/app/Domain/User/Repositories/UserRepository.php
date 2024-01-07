@@ -10,18 +10,24 @@ class UserRepository implements UserRepositoryInterface
     {
     }
 
-    public function createNewUser(array $data): User
+    public function create(array $data): User
     {
         return $this->model->create($data);
     }
 
     public function getUserByEmail(string $email): User
     {
-        return $this->model->where('email', $email)->first();
+        return $this->model->where('email', $email)->firstOrFail();
     }
 
-    public function updateUser(User $user, array $data): bool
+    public function findOne(int $id): User
     {
+        return $this->model->findOrFail($id);
+    }
+
+    public function update(int $id, array $data): bool
+    {
+        $user = $this->model->findOrFail($id);
         return $user->update($data);
     }
 }
