@@ -2,9 +2,10 @@
 
 namespace App\Core\Exceptions;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -29,8 +30,12 @@ class Handler extends ExceptionHandler
             //
         });
 
-        $this->renderable(function (QueryException $e, Request $request) {
+        $this->renderable(function (QueryException $e) {
             return response()->json(['error' => ['request' => 'There was an error making your request. Please try again.']], 500);
+        });
+
+        $this->renderable(function (NotFoundHttpException $e) {
+            return response()->json(['error' => ['request' => 'Not Found.']], 404);
         });
     }
 }
