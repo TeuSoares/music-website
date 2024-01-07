@@ -13,10 +13,13 @@ class Music extends Model
     protected $table = 'musics';
     protected $guarded = ['id'];
 
-    protected function link(): Attribute
+    protected function youtubeId(): Attribute
     {
         return Attribute::make(
-            set: fn (string $value) => 'https://www.youtube.com/embed/' . $value,
+            set: function (string $value) {
+                $id_youtube = explode('v=', $value)[1];
+                return $id_youtube;
+            },
         );
     }
 
