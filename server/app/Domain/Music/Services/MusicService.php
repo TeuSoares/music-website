@@ -3,7 +3,6 @@
 namespace Domain\Music\Services;
 
 use App\Core\Traits\ThrowException;
-use Domain\Music\Models\Music;
 use Domain\Music\Repositories\MusicRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Storage;
@@ -73,12 +72,5 @@ class MusicService
             Storage::delete($path);
             $this->throwExceptionHttpResponse('Failed to update music. Please try again.');
         }
-    }
-
-    public function deleteMusic(Music $music): void
-    {
-        Storage::delete($music->thumbnail);
-
-        $this->repository->delete($music->id);
     }
 }

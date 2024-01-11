@@ -3,8 +3,7 @@
 namespace Tests\Feature\Music;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
+
 use Tests\TestCase;
 use Tests\Traits\MusicTrait;
 use Tests\Traits\UserTrait;
@@ -17,23 +16,13 @@ class DeleteTest extends TestCase
     {
         $this->userAuthenticated();
 
-        Storage::fake();
-
-        $file = UploadedFile::fake()->image('thumbnail.jpg');
-
-        $path = Storage::putFile('musics', $file);
-        
         $music = $this->createNewMusic();
 
-        $music->thumbnail = $path;
-        $music->save();
-        
         $response = $this->deleteJson(route('music.destroy', ['id' => $music->id]));
 
         $response->assertStatus(200)
             ->assertSee('Music deleted successfully.');
-        
-        Storage::assertMissing($music->thumbnail);
+
         $this->assertDatabaseMissing('musics', $music->toArray());
     }
 

@@ -62,7 +62,7 @@ class MusicController extends Controller
 
         $this->authorize('delete', $music);
 
-        $this->service->deleteMusic($music);
+        $this->repository->delete($id);
 
         return $this->responseMessage('Music deleted successfully.');
     }
