@@ -22,17 +22,17 @@ class DeleteTest extends TestCase
         $file = UploadedFile::fake()->image('thumbnail.jpg');
 
         $path = Storage::putFile('musics', $file);
-        
+
         $music = $this->createNewMusic();
 
         $music->thumbnail = $path;
         $music->save();
-        
+
         $response = $this->deleteJson(route('music.destroy', ['id' => $music->id]));
 
         $response->assertStatus(200)
             ->assertSee('Music deleted successfully.');
-        
+
         Storage::assertMissing($music->thumbnail);
         $this->assertDatabaseMissing('musics', $music->toArray());
     }
