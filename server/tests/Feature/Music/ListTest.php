@@ -13,7 +13,7 @@ class ListTest extends TestCase
 {
     use UserTrait, MusicTrait, ValidationTrait, RefreshDatabase;
 
-    public function test_should_list_all_music_of_user_logged(): void
+    public function test_should_list_all_music_of_logged_in_user(): void
     {
         $this->userAuthenticated();
 
@@ -37,7 +37,7 @@ class ListTest extends TestCase
             ]);
     }
 
-    public function test_filter_validation_to_list_music(): void
+    public function test_filter_validation_for_listing_songs(): void
     {
         $fails = $this->checkIfExistsValidationError(new ListMusicRequest, [
             'genre' => 'Rock',
@@ -59,7 +59,7 @@ class ListTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_should_return_forbidden_if_userId_of_music_is_different_from_user_logged(): void
+    public function test_should_return_forbidden_if_the_music_userId_is_different_from_the_logged_user(): void
     {
         $user = $this->userAuthenticated();
 

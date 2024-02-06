@@ -17,7 +17,7 @@ class ResetPasswordTest extends TestCase
 {
     use RefreshDatabase, UserTrait, ValidationTrait;
 
-    public function test_if_mail_is_valid_it_send_mail_to_reset_password(): void
+    public function test_should_send_email_to_reset_password_if_email_is_valid(): void
     {
         Notification::fake();
 
@@ -35,7 +35,7 @@ class ResetPasswordTest extends TestCase
         );
     }
 
-    public function test_if_mail_not_is_valid_should_not_send_notification(): void
+    public function test_should_not_send_email_to_reset_your_password_if_email_is_not_valid(): void
     {
         Notification::fake();
 
@@ -54,14 +54,14 @@ class ResetPasswordTest extends TestCase
         Notification::assertNothingSent();
     }
 
-    public function test_validation_rules_at_reset_password(): void
+    public function test_validation_rules_for_resetting_password(): void
     {
         $fails = $this->checkIfExistsValidationError(new ResetPasswordRequest);
 
         $this->assertEquals(true, $fails);
     }
 
-    public function test_should_throw_exception_if_mail_is_invalid(): void
+    public function test_should_throw_exception_if_email_is_invalid(): void
     {
         $user = $this->createNewUser();
 
@@ -79,7 +79,7 @@ class ResetPasswordTest extends TestCase
         $this->assertEquals(true, $fails);
     }
 
-    public function test_if_token_is_invalid_not_should_reset_password(): void
+    public function test_should_not_reset_password_if_email_is_invalid(): void
     {
         $user = $this->createNewUser();
 
@@ -99,7 +99,7 @@ class ResetPasswordTest extends TestCase
             ]);
     }
 
-    public function test_should_reset_password_if_token_and_email_is_valid(): void
+    public function test_should_reset_password_if_token_and_email_are_valid(): void
     {
         $user = $this->createNewUser();
 

@@ -17,7 +17,7 @@ class EmailVerificationTest extends TestCase
 {
     use RefreshDatabase, UserTrait;
 
-    public function test_email_verification_should_return_success(): void
+    public function test_should_return_success_when_sending_verification_email(): void
     {
         $user = $this->userAuthenticated();
 
@@ -40,7 +40,7 @@ class EmailVerificationTest extends TestCase
         ]);
     }
 
-    public function test_if_not_exists_signature_should_return_error(): void
+    public function test_should_return_error_if_there_is_no_signature(): void
     {
         $user = $this->userAuthenticated();
 
@@ -53,7 +53,7 @@ class EmailVerificationTest extends TestCase
             ->assertSee('Invalid signature.');
     }
 
-    public function test_if_id_and_hash_incorrect_not_should_verify_email(): void
+    public function test_email_verification_should_fail_when_id_and_hash_are_incorrect(): void
     {
         $this->userAuthenticated();
 
@@ -65,7 +65,7 @@ class EmailVerificationTest extends TestCase
         $response->assertStatus(403);
     }
 
-    public function test_if_user_not_authenticated_not_should_verify_email(): void
+    public function test_email_verification_should_fail_when_user_is_not_logged_in(): void
     {
         $user = $this->createNewUser();
 
@@ -77,7 +77,7 @@ class EmailVerificationTest extends TestCase
         $response->assertStatus(401);
     }
 
-    public function test_should_send_email(): void
+    public function test_should_send_email_successfully(): void
     {
         Notification::fake();
 

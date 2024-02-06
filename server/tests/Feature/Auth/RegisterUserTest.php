@@ -17,7 +17,7 @@ class RegisterUserTest extends TestCase
 {
     use RefreshDatabase, UserTrait, WithFaker, ValidationTrait;
 
-    public function test_create_user_retun_success(): void
+    public function test_create_user_should_return_success(): void
     {
         $this->withoutExceptionHandling();
 
@@ -43,14 +43,14 @@ class RegisterUserTest extends TestCase
         $this->assertDatabaseHas('users', ['email' => $data['email']]);
     }
 
-    public function test_validation_rules_at_create_new_user(): void
+    public function test_validation_rules_to_create_new_user(): void
     {
         $fails = $this->checkIfExistsValidationError(new RegisterUserRequest);
 
         $this->assertEquals(true, $fails);
     }
 
-    public function test_if_email_already_exist_return_error(): void
+    public function test_user_creation_should_fail_if_the_email_already_exists(): void
     {
         $user = $this->createNewUser();
 

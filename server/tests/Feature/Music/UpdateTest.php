@@ -44,7 +44,7 @@ class UpdateTest extends TestCase
         ]);
     }
 
-    public function test_should_update_image_of_music_with_success(): void
+    public function test_should_update_the_song_image_successfully(): void
     {
         $this->userAuthenticated();
 
@@ -83,7 +83,7 @@ class UpdateTest extends TestCase
         ]);
     }
 
-    public function test_not_should_update_a_music_if_user_not_authenticated(): void
+    public function test_should_not_update_a_song_if_the_user_is_not_authenticated(): void
     {
         $this->createNewUser();
 
@@ -108,14 +108,14 @@ class UpdateTest extends TestCase
         ]);
     }
 
-    public function test_not_should_update_music_if_validations_failed(): void
+    public function test_should_not_update_music_if_validations_failed(): void
     {
         $fails = $this->checkIfExistsValidationError(new MutationMusicRequest);
 
         $this->assertEquals(true, $fails);
     }
 
-    public function test_not_should_update_music_if_the_thumbnail_not_of_a_image(): void
+    public function test_should_not_update_music_if_the_thumbnail_is_not_an_image(): void
     {
         $file = UploadedFile::fake()->create('document.pdf');
 
@@ -132,7 +132,7 @@ class UpdateTest extends TestCase
         $this->assertEquals(true, $fails);
     }
 
-    public function test_not_should_update_music_if_the_thumbnail_not_a_image_of_type_jpg_or_png(): void
+    public function test_should_not_update_music_if_the_thumbnail_is_not_jpg_or_png_image(): void
     {
         $file = UploadedFile::fake()->image('image.gif');
 
@@ -149,7 +149,7 @@ class UpdateTest extends TestCase
         $this->assertEquals(true, $fails);
     }
 
-    public function test_should_return_forbidden_if_userId_of_music_is_different_from_user_logged(): void
+    public function test_should_return_forbidden_if_the_music_userId_is_different_from_the_logged_user(): void
     {
         $user = $this->userAuthenticated();
 

@@ -37,7 +37,7 @@ class DeleteTest extends TestCase
         $this->assertDatabaseMissing('musics', $music->toArray());
     }
 
-    public function test_should_return_forbidden_if_userId_of_music_is_different_from_user_logged(): void
+    public function test_should_return_forbidden_if_the_music_userId_is_different_from_the_logged_user(): void
     {
         $user = $this->userAuthenticated();
 
@@ -50,7 +50,7 @@ class DeleteTest extends TestCase
         $response->assertStatus(403);
     }
 
-    public function test_not_should_delete_a_music_if_user_not_logged(): void
+    public function test_should_not_delete_a_song_if_you_are_not_logged_in_as_a_user(): void
     {
         $this->createNewUser();
 
@@ -61,7 +61,7 @@ class DeleteTest extends TestCase
         $response->assertStatus(401);
     }
 
-    public function test_should_return_not_found_if_music_not_exists(): void
+    public function test_should_return_not_found_if_a_song_does_not_exist(): void
     {
         $this->userAuthenticated();
 

@@ -54,14 +54,14 @@ class LoginTest extends TestCase
         $this->assertGuest();
     }
 
-    public function test_validation_rules_at_attempt_login(): void
+    public function test_validation_rules_for_login_attempts(): void
     {
         $fails = $this->checkIfExistsValidationError(new LoginRequest);
 
         $this->assertEquals(true, $fails);
     }
 
-    public function test_if_user_for_disconnected_with_success(): void
+    public function test_user_can_log_out_successfully(): void
     {
         $this->userAuthenticated();
 
@@ -75,7 +75,7 @@ class LoginTest extends TestCase
         $this->assertGuest();
     }
 
-    public function test_a_user_not_can_logout_if_no_authenticate(): void
+    public function test_user_cannot_log_out_if_not_authenticated(): void
     {
         $response = $this->postJson(route('auth.logout'));
 

@@ -50,7 +50,7 @@ class CreateTest extends TestCase
         ]);
     }
 
-    public function test_should_not_insert_a_music_if_user_not_authenticated(): void
+    public function test_should_not_insert_a_song_if_the_user_is_not_authenticated(): void
     {
         Storage::fake();
 
@@ -82,14 +82,14 @@ class CreateTest extends TestCase
         ]);
     }
 
-    public function test_not_should_create_a_new_music_if_validations_failed(): void
+    public function test_should_not_create_a_new_music_if_validations_failed(): void
     {
         $fails = $this->checkIfExistsValidationError(new MutationMusicRequest);
 
         $this->assertEquals(true, $fails);
     }
 
-    public function test_not_should_create_a_new_music_if_the_thumbnail_not_of_a_image(): void
+    public function test_should_not_create_a_new_music_if_the_thumbnail_is_not_an_image(): void
     {
         $file = UploadedFile::fake()->create('document.pdf');
 
@@ -106,7 +106,7 @@ class CreateTest extends TestCase
         $this->assertEquals(true, $fails);
     }
 
-    public function test_not_should_create_a_new_music_if_the_thumbnail_not_a_image_of_type_jpg_or_png(): void
+    public function test_should_not_create_music_if_the_thumbnail_is_not_jpg_or_png_image(): void
     {
         $file = UploadedFile::fake()->image('image.gif');
 
