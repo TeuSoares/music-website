@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Music;
 
-use Domain\Music\Requests\UpdateMusicRequest;
+use Domain\Music\Requests\MutationMusicRequest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
@@ -110,7 +110,7 @@ class UpdateTest extends TestCase
 
     public function test_not_should_update_music_if_validations_failed(): void
     {
-        $fails = $this->checkIfExistsValidationError(new UpdateMusicRequest);
+        $fails = $this->checkIfExistsValidationError(new MutationMusicRequest);
 
         $this->assertEquals(true, $fails);
     }
@@ -127,7 +127,7 @@ class UpdateTest extends TestCase
             'thumbnail'    => $file
         ];
 
-        $fails = $this->checkIfExistsValidationError(new UpdateMusicRequest, $data);
+        $fails = $this->checkIfExistsValidationError(new MutationMusicRequest, $data);
 
         $this->assertEquals(true, $fails);
     }
@@ -144,7 +144,7 @@ class UpdateTest extends TestCase
             'thumbnail'    => $file
         ];
 
-        $fails = $this->checkIfExistsValidationError(new UpdateMusicRequest, $data);
+        $fails = $this->checkIfExistsValidationError(new MutationMusicRequest, $data);
 
         $this->assertEquals(true, $fails);
     }

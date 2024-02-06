@@ -4,17 +4,23 @@ namespace Domain\Music\Requests;
 
 use App\Core\Request;
 
-class UpdateMusicRequest extends Request
+class MutationMusicRequest extends Request
 {
     public function rules()
     {
-        return [
+        $rules = [
             'artist'       => 'required|string',
             'genre'        => 'required|string',
             'name'         => 'required|string',
             'link_youtube' => 'required',
-            'thumbnail'    => 'nullable|file|mimes:jpg,png'
+            'thumbnail'    => 'file|mimes:jpg,png'
         ];
+
+        if (request()->method() == 'POST') {
+            $rules['thumbnail'] = 'required|' . $rules['thumbnail'];
+        }
+
+        return $rules;
     }
 
     public function messages()

@@ -2,8 +2,7 @@
 
 namespace Tests\Feature\Music;
 
-use Domain\Music\Requests\CreateMusicRequest;
-
+use Domain\Music\Requests\MutationMusicRequest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -51,7 +50,7 @@ class CreateTest extends TestCase
         ]);
     }
 
-    public function test_not_should_insert_a_music_if_user_not_authenticated(): void
+    public function test_should_not_insert_a_music_if_user_not_authenticated(): void
     {
         Storage::fake();
 
@@ -85,7 +84,7 @@ class CreateTest extends TestCase
 
     public function test_not_should_create_a_new_music_if_validations_failed(): void
     {
-        $fails = $this->checkIfExistsValidationError(new CreateMusicRequest);
+        $fails = $this->checkIfExistsValidationError(new MutationMusicRequest);
 
         $this->assertEquals(true, $fails);
     }
@@ -102,7 +101,7 @@ class CreateTest extends TestCase
             'thumbnail'    => $file
         ];
 
-        $fails = $this->checkIfExistsValidationError(new CreateMusicRequest, $data);
+        $fails = $this->checkIfExistsValidationError(new MutationMusicRequest, $data);
 
         $this->assertEquals(true, $fails);
     }
@@ -119,7 +118,7 @@ class CreateTest extends TestCase
             'thumbnail'    => $file
         ];
 
-        $fails = $this->checkIfExistsValidationError(new CreateMusicRequest, $data);
+        $fails = $this->checkIfExistsValidationError(new MutationMusicRequest, $data);
 
         $this->assertEquals(true, $fails);
     }

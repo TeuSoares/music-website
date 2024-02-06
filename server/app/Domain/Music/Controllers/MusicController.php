@@ -7,9 +7,8 @@ use Illuminate\Http\JsonResponse;
 use App\Core\Controller;
 
 use Domain\Music\Repositories\MusicRepositoryInterface;
-use Domain\Music\Requests\CreateMusicRequest;
 use Domain\Music\Requests\ListMusicRequest;
-use Domain\Music\Requests\UpdateMusicRequest;
+use Domain\Music\Requests\MutationMusicRequest;
 use Domain\Music\Services\MusicService;
 use Domain\Music\Resources\MusicResource;
 
@@ -29,7 +28,7 @@ class MusicController extends Controller
         return $this->responseDataWithCollectionResource($rows);
     }
 
-    public function store(CreateMusicRequest $request): JsonResponse
+    public function store(MutationMusicRequest $request): JsonResponse
     {
         $this->service->createMusic($request->all());
 
@@ -45,7 +44,7 @@ class MusicController extends Controller
         return $this->responseDataWithResource($music);
     }
 
-    public function update(int $id, UpdateMusicRequest $request): JsonResponse
+    public function update(int $id, MutationMusicRequest $request): JsonResponse
     {
         $music = $this->repository->findOne($id);
 
