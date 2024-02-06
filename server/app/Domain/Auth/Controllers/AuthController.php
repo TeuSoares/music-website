@@ -31,7 +31,7 @@ class AuthController extends Controller
     {
         $request->user()->tokens()->delete();
 
-        return $this->responseMessage('User logged out with success.');
+        return $this->responseMessage('User successfully logged out.');
     }
 
     public function registerUser(RegisterUserRequest $request): JsonResponse
@@ -52,20 +52,20 @@ class AuthController extends Controller
     {
         $request->user()->sendEmailVerificationNotification();
 
-        return $this->responseMessage('E-mail resend success.');
+        return $this->responseMessage('Email successfully sent.');
     }
 
     public function forgotPassword(ForgotPasswordRequest $request): JsonResponse
     {
         $this->service->forgotPassword($request->email);
 
-        return $this->responseMessage('Sent reset link successfully to your mail.');
+        return $this->responseMessage('Reset link successfully sent to your email.');
     }
 
     public function resetPassword(ResetPasswordRequest $request): JsonResponse
     {
         $this->service->resetPassword($request->all());
 
-        return $this->responseMessage('Password reset successfully.');
+        return $this->responseMessage('Successful password reset.');
     }
 }

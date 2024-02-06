@@ -30,7 +30,7 @@ class MusicService
         $path = $data['thumbnail']->store('musics');
 
         if (!Storage::exists($path)) {
-            $this->throwExceptionHttpResponse('Failed to create a new music. Please try again.');
+            $this->throwExceptionHttpResponse('Unable to insert a song. Please try again.');
         }
 
         try {
@@ -44,7 +44,7 @@ class MusicService
             ]);
         } catch (\Exception $e) {
             Storage::delete($path);
-            $this->throwExceptionHttpResponse('Failed to create a new music. Please try again.');
+            $this->throwExceptionHttpResponse('Failed to create a new song. Please try again.');
         }
     }
 
@@ -58,7 +58,7 @@ class MusicService
             $path = $data['thumbnail']->store('musics');
 
             if (!Storage::exists($path)) {
-                $this->throwExceptionHttpResponse('Failed to update music. Please try again.');
+                $this->throwExceptionHttpResponse('Unable to update a song. Please try again.');
             }
 
             $data['thumbnail'] = $path;

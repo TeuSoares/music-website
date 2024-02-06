@@ -59,9 +59,9 @@ class AuthService
         }
 
         if ($status === Password::INVALID_TOKEN) {
-            $this->throwExceptionValidation(['token' => 'The token selected is invalid.']);
+            $this->throwExceptionValidation(['token' => 'The selected token is invalid.']);
         }
 
-        $this->throwExceptionHttpResponse('Error at reset password. Please try again');
+        $this->throwExceptionHttpResponse('Error resetting password. Please try again');
     }
 }
