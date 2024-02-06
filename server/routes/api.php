@@ -1,9 +1,6 @@
 <?php
 
 use Domain\Auth\Controllers\AuthController;
-use Domain\Music\Controllers\MusicController;
-use Domain\User\Controllers\UserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
