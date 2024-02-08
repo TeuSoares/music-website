@@ -27,7 +27,7 @@ class MusicService
 
     public function createMusic(array $data): void
     {
-        $path = $data['thumbnail']->store('musics');
+        $path = $data['thumbnail']->store('musics/' . auth()->user()->id);
 
         if (!Storage::exists($path)) {
             $this->throwExceptionHttpResponse('Unable to insert a song. Please try again.');
@@ -55,7 +55,7 @@ class MusicService
 
             Storage::delete($music['thumbnail']);
 
-            $path = $data['thumbnail']->store('musics');
+            $path = $data['thumbnail']->store('musics/' . auth()->user()->id);
 
             if (!Storage::exists($path)) {
                 $this->throwExceptionHttpResponse('Unable to update a song. Please try again.');

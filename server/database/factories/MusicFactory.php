@@ -25,7 +25,7 @@ class MusicFactory extends Factory
             'genre' => 'Rock',
             'name' => fake()->sentence(),
             'youtube_id' => 'https://www.youtube.com/watch?v=8AHCfZTRGiI',
-            'thumbnail' => 'musics/thumbnail.jpg',
+            'thumbnail' => 'musics/1/thumbnail.jpg',
         ];
     }
 }

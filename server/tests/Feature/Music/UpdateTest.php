@@ -46,7 +46,7 @@ class UpdateTest extends TestCase
 
     public function test_should_update_the_song_image_successfully(): void
     {
-        $this->userAuthenticated();
+        $user = $this->userAuthenticated();
 
         $music = $this->createNewMusic();
 
@@ -67,7 +67,7 @@ class UpdateTest extends TestCase
         $response->assertStatus(200)
             ->assertSee('Music update with success.');
 
-        $path = 'musics/' . $file->hashName();
+        $path = 'musics/' . $user->id . '/' . $file->hashName();
 
         Storage::disk();
 

@@ -17,7 +17,7 @@ class CreateTest extends TestCase
 
     public function test_should_insert_a_music_with_success(): void
     {
-        $this->userAuthenticated();
+        $user = $this->userAuthenticated();
 
         Storage::fake();
 
@@ -36,7 +36,7 @@ class CreateTest extends TestCase
         $response->assertStatus(201)
             ->assertSee('Music created with success.');
 
-        $path = 'musics/' . $file->hashName();
+        $path = 'musics/' . $user->id . '/' . $file->hashName();
 
         Storage::disk();
         Storage::assertExists($path);
@@ -52,8 +52,6 @@ class CreateTest extends TestCase
 
     public function test_should_not_insert_a_song_if_the_user_is_not_authenticated(): void
     {
-        Storage::fake();
-
         $file = UploadedFile::fake()->image('thumbnail.jpg');
 
         $data = [
@@ -68,17 +66,11 @@ class CreateTest extends TestCase
 
         $response->assertStatus(401);
 
-        $path = 'musics/' . $file->hashName();
-
-        Storage::disk();
-        Storage::assertMissing($path);
-
         $this->assertDatabaseMissing('musics', [
             'artist'     => 'Imagine Dragons',
             'genre'      => 'Rock',
             'name'       => 'Believer',
-            'youtube_id' => '7wtfhZwyrcc',
-            'thumbnail'  => $path
+            'youtube_id' => '7wtfhZwyrcc'
         ]);
     }
 
