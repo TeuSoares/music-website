@@ -68,7 +68,7 @@ class LoginTest extends TestCase
         $response = $this->postJson(route('auth.logout'));
 
         $response->assertStatus(200)
-            ->assertSee('User logged out with success.');
+            ->assertSee('User successfully logged out.');
 
         $this->refreshApplication();
 

@@ -86,7 +86,7 @@ class EmailVerificationTest extends TestCase
         $response = $this->postJson(route('auth.verification.send'));
 
         $response->assertStatus(200)
-            ->assertSee('E-mail resend success.');
+            ->assertSee('Email successfully sent.');
 
         Notification::assertSentTo(
             [$user],

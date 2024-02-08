@@ -92,9 +92,9 @@ class ResetPasswordTest extends TestCase
 
         $response->assertStatus(422)
             ->assertExactJson([
-                'message' => 'The token selected is invalid.',
+                'message' => 'The selected token is invalid.',
                 'errors' => [
-                    'token' => ['The token selected is invalid.']
+                    'token' => ['The selected token is invalid.']
                 ]
             ]);
     }
@@ -113,6 +113,6 @@ class ResetPasswordTest extends TestCase
         ]);
 
         $response->assertStatus(200)
-            ->assertJson(['message' => 'Password reset successfully.']);
+            ->assertJson(['message' => 'Successful password reset.']);
     }
 }
