@@ -1,27 +1,29 @@
-'use client'
+"use client";
 
-import Form from '@/components/form/form'
-import TextField from '@/components/form/inputs/text-field'
-import LinkUnderline from '@/components/layout/link-underline'
+import FormButton from "@/components/form/components/form-button";
+import TextField from "@/components/form/components/text-field";
+import Form from "@/components/form/form";
+
+import LinkUnderline from "@/components/layout/link-underline";
 import {
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
   CardFooter,
-} from '@/components/ui/card'
+} from "@/components/ui/card";
 
-import { z } from 'zod'
+import { z } from "zod";
 
 const formSchema = z.object({
   email: z.string().min(2).max(50),
   password: z.string().min(2).max(50),
-})
+});
 
 export default function Login() {
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values)
-  }
+    console.log(values);
+  };
 
   return (
     <>
@@ -33,10 +35,10 @@ export default function Login() {
         <Form
           formSchema={formSchema}
           onSubmit={onSubmit}
-          buttonText="Log In"
+          className="flex-col"
           defaultValues={{
-            email: '',
-            password: '',
+            email: "",
+            password: "",
           }}
         >
           <TextField
@@ -59,6 +61,7 @@ export default function Login() {
               </>
             }
           />
+          <FormButton>Log In</FormButton>
         </Form>
       </CardContent>
       <CardFooter className="flex flex-col gap-5">
@@ -68,5 +71,5 @@ export default function Login() {
         </span>
       </CardFooter>
     </>
-  )
+  );
 }
