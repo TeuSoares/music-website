@@ -13,7 +13,7 @@ import { Input } from '@/components/ui/input'
 
 interface TextFieldProps {
   name: string
-  label: string
+  label?: string
   type?: string
   placeholder?: string
   description?: string | ReactNode
@@ -27,9 +27,9 @@ const TextField = ({
   label,
   placeholder,
   description,
-  className = '',
+  className,
+  defaultValue,
   type = 'text',
-  defaultValue = '',
   disabled = false,
 }: TextFieldProps) => {
   const { control } = useFormContext()
@@ -42,7 +42,7 @@ const TextField = ({
       disabled={disabled}
       render={({ field }) => (
         <FormItem className={className}>
-          <FormLabel>{label}</FormLabel>
+          {label && <FormLabel>{label}</FormLabel>}
           <FormControl>
             <Input type={type} placeholder={placeholder} {...field} />
           </FormControl>
