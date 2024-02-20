@@ -1,8 +1,9 @@
 'use client'
 
-import CardForm from '@/components/form/components/card-form'
+import CardForm from '@/app/(auth)/components/card-form'
 import TextField from '@/components/form/components/text-field'
 import LinkUnderline from '@/components/layout/link-underline'
+import { CardFooter } from '@/components/ui/card'
 
 import { z } from 'zod'
 
@@ -28,14 +29,6 @@ export default function Login() {
           email: '',
           password: '',
         }}
-        footer={
-          <span>
-            {`Don't have an account? `}
-            <LinkUnderline href="register-user">
-              Create an account
-            </LinkUnderline>
-          </span>
-        }
       >
         <TextField
           name="email"
@@ -58,6 +51,10 @@ export default function Login() {
           }
         />
       </CardForm>
+      <CardFooter className="flex justify-center gap-1 text-sm">
+        {`Don't have an account? `}
+        <LinkUnderline href="register-user">Create an account</LinkUnderline>
+      </CardFooter>
     </>
   )
 }
