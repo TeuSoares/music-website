@@ -5,15 +5,10 @@ import CardForm from '@/app/(auth)/components/card-form'
 import TextField from '@/components/form/components/text-field'
 import LinkUnderline from '@/components/layout/link-underline'
 
-import { z } from 'zod'
-
-const formSchema = z.object({
-  email: z.string().min(2).max(50),
-  password: z.string().min(2).max(50),
-})
+import { formSchema, LoginFormData } from './formSchema'
 
 export default function Login() {
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+  const onSubmit = (values: LoginFormData) => {
     console.log(values)
   }
 
