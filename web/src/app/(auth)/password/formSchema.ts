@@ -2,7 +2,6 @@ import { z } from 'zod'
 
 export const formSchema = z
   .object({
-    token: z.string(),
     email: z.string().email(),
     password: z
       .string()

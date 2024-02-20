@@ -1,13 +1,27 @@
 'use client'
 
+import { useSearchParams } from 'next/navigation'
+
 import CardForm from '@/app/(auth)/components/card-form'
 import TextField from '@/components/form/components/text-field'
 
-import { formSchema, ResetPasswordFormData } from './formSchema'
+import { formSchema, ResetPasswordFormData } from '../../formSchema'
 
-export default function ResetPassword() {
+interface ResetPasswordProps {
+  params: {
+    token: string
+  }
+}
+
+export default function ResetPassword({ params }: ResetPasswordProps) {
+  const searchParams = useSearchParams()
+
   const onSubmit = (values: ResetPasswordFormData) => {
-    console.log(values)
+    const formData = {
+      token: params.token,
+      ...values,
+    }
+    console.log(formData)
   }
 
   return (
@@ -17,18 +31,13 @@ export default function ResetPassword() {
         textButton="Reset Password"
         formSchema={formSchema}
         onSubmit={onSubmit}
+        defaultValues={{
+          email: searchParams.get('email'),
+          password: '',
+          password_confirmation: '',
+        }}
       >
-        <TextField
-          name="token"
-          label="Token"
-          placeholder="Enter the token received by email."
-        />
-        <TextField
-          name="email"
-          type="email"
-          label="E-mail"
-          placeholder="Enter your e-mail address"
-        />
+        <TextField name="email" type="email" label="E-mail" disabled />
         <TextField
           name="password"
           type="password"
