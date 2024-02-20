@@ -17,7 +17,6 @@ interface TextFieldProps {
   type?: string
   placeholder?: string
   description?: string | ReactNode
-  defaultValue?: string | number
   disabled?: boolean
   className?: string
 }
@@ -28,7 +27,6 @@ const TextField = ({
   placeholder,
   description,
   className,
-  defaultValue,
   type = 'text',
   disabled = false,
 }: TextFieldProps) => {
@@ -38,7 +36,6 @@ const TextField = ({
     <FormField
       control={control}
       name={name}
-      defaultValue={defaultValue}
       disabled={disabled}
       render={({ field }) => (
         <FormItem className={className}>
