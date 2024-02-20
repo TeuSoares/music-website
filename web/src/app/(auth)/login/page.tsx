@@ -1,9 +1,9 @@
 'use client'
 
+import CardFooterLink from '../components/card-footer-link'
 import CardForm from '@/app/(auth)/components/card-form'
 import TextField from '@/components/form/components/text-field'
 import LinkUnderline from '@/components/layout/link-underline'
-import { CardFooter } from '@/components/ui/card'
 
 import { z } from 'zod'
 
@@ -51,12 +51,11 @@ export default function Login() {
           }
         />
       </CardForm>
-      <CardFooter className="flex justify-center text-sm">
-        {`Don't have an account?`}
-        <LinkUnderline href="register-user" className="ml-1">
-          Create an account
-        </LinkUnderline>
-      </CardFooter>
+      <CardFooterLink
+        description="Don't have an account?"
+        textLink="Create an account"
+        href="register-user"
+      />
     </>
   )
 }
