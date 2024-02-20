@@ -1,6 +1,6 @@
 'use client'
 
-import CardFooterLink from '../components/card-footer-link'
+import CardFooterLink from '../../components/card-footer-link'
 import CardForm from '@/app/(auth)/components/card-form'
 import TextField from '@/components/form/components/text-field'
 import LinkUnderline from '@/components/layout/link-underline'
