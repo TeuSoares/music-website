@@ -51,9 +51,11 @@ export default function Login() {
           }
         />
       </CardForm>
-      <CardFooter className="flex justify-center gap-1 text-sm">
-        {`Don't have an account? `}
-        <LinkUnderline href="register-user">Create an account</LinkUnderline>
+      <CardFooter className="flex justify-center text-sm">
+        {`Don't have an account?`}
+        <LinkUnderline href="register-user" className="ml-1">
+          Create an account
+        </LinkUnderline>
       </CardFooter>
     </>
   )
