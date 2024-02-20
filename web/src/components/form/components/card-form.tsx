@@ -1,6 +1,10 @@
+import { ReactNode } from 'react'
+
 import {
+  Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
@@ -12,6 +16,7 @@ interface CardFormProps extends FormProps {
   title: string
   textButton: string
   description?: string
+  footer?: string | ReactNode
 }
 
 const CardForm = ({
@@ -22,9 +27,10 @@ const CardForm = ({
   children,
   formSchema,
   onSubmit,
+  footer,
 }: CardFormProps) => {
   return (
-    <>
+    <Card className="w-[450px]">
       <CardHeader>
         <CardTitle>{title}</CardTitle>
         {description && <CardDescription>{description}</CardDescription>}
@@ -40,7 +46,12 @@ const CardForm = ({
           <FormButton>{textButton}</FormButton>
         </Form>
       </CardContent>
-    </>
+      {footer && (
+        <CardFooter className="flex flex-col gap-5 text-sm">
+          {footer}
+        </CardFooter>
+      )}
+    </Card>
   )
 }
 
