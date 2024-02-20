@@ -1,18 +1,18 @@
-import { ReactNode } from "react";
-import { useForm } from "react-hook-form";
+import { ReactNode } from 'react'
+import { useForm } from 'react-hook-form'
 
-import { Form as FormUI } from "../ui/form";
+import { Form as FormUI } from '../ui/form'
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ZodType, z } from "zod";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { ZodType, z } from 'zod'
 
 type FormCardProps = {
-  formSchema: ZodType;
-  children: ReactNode;
-  onSubmit: (values: z.infer<FormCardProps["formSchema"]>) => void;
-  defaultValues?: object;
-  className?: string;
-};
+  formSchema: ZodType
+  children: ReactNode
+  onSubmit: (values: z.infer<FormCardProps['formSchema']>) => void
+  defaultValues?: object
+  className?: string
+}
 
 const Form = ({
   formSchema,
@@ -24,7 +24,7 @@ const Form = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: defaultValues,
-  });
+  })
 
   return (
     <FormUI {...form}>
@@ -32,7 +32,7 @@ const Form = ({
         <div className={`flex w-full gap-4 ${className}`}>{children}</div>
       </form>
     </FormUI>
-  );
-};
+  )
+}
 
-export default Form;
+export default Form
