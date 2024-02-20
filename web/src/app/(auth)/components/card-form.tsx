@@ -1,22 +1,16 @@
-import { ReactNode } from 'react'
-
+import FormButton from '../../../components/form/components/form-button'
+import Form, { FormProps } from '../../../components/form/form'
 import {
-  Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-
-import Form, { FormProps } from '../form'
-import FormButton from './form-button'
 
 interface CardFormProps extends FormProps {
   title: string
   textButton: string
   description?: string
-  footer?: string | ReactNode
 }
 
 const CardForm = ({
@@ -27,10 +21,9 @@ const CardForm = ({
   children,
   formSchema,
   onSubmit,
-  footer,
 }: CardFormProps) => {
   return (
-    <Card className="w-[450px]">
+    <>
       <CardHeader>
         <CardTitle>{title}</CardTitle>
         {description && <CardDescription>{description}</CardDescription>}
@@ -46,12 +39,7 @@ const CardForm = ({
           <FormButton>{textButton}</FormButton>
         </Form>
       </CardContent>
-      {footer && (
-        <CardFooter className="flex flex-col gap-5 text-sm">
-          {footer}
-        </CardFooter>
-      )}
-    </Card>
+    </>
   )
 }
 
