@@ -6,10 +6,10 @@ import { Form as FormUI } from '../ui/form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ZodType, z } from 'zod'
 
-type FormCardProps = {
+export interface FormProps {
   formSchema: ZodType
   children: ReactNode
-  onSubmit: (values: z.infer<FormCardProps['formSchema']>) => void
+  onSubmit: (values: z.infer<FormProps['formSchema']>) => void
   defaultValues?: object
   className?: string
 }
@@ -20,7 +20,7 @@ const Form = ({
   onSubmit,
   defaultValues,
   className,
-}: FormCardProps) => {
+}: FormProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: defaultValues,
