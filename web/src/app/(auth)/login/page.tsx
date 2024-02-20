@@ -1,16 +1,9 @@
 'use client'
 
-import FormButton from '@/components/form/components/form-button'
+import CardForm from '@/components/form/components/card-form'
 import TextField from '@/components/form/components/text-field'
-import Form from '@/components/form/form'
 import LinkUnderline from '@/components/layout/link-underline'
-import {
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-  CardFooter,
-} from '@/components/ui/card'
+import { CardFooter } from '@/components/ui/card'
 
 import { z } from 'zod'
 
@@ -26,43 +19,38 @@ export default function Login() {
 
   return (
     <>
-      <CardHeader>
-        <CardTitle>Log In</CardTitle>
-        <CardDescription>Log in to listen to your music.</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Form
-          formSchema={formSchema}
-          onSubmit={onSubmit}
-          className="flex-col"
-          defaultValues={{
-            email: '',
-            password: '',
-          }}
-        >
-          <TextField
-            name="email"
-            type="email"
-            label="E-mail"
-            placeholder="Enter your e-mail address"
-          />
-          <TextField
-            name="password"
-            type="password"
-            label="Password"
-            placeholder="Enter your password"
-            description={
-              <>
-                Forgot Password?
-                <LinkUnderline href="forgot-password" className="ml-1">
-                  Click here to reset
-                </LinkUnderline>
-              </>
-            }
-          />
-          <FormButton>Log In</FormButton>
-        </Form>
-      </CardContent>
+      <CardForm
+        title="Log In"
+        description="Log in to listen to your music."
+        textButton="Log In"
+        formSchema={formSchema}
+        onSubmit={onSubmit}
+        defaultValues={{
+          email: '',
+          password: '',
+        }}
+      >
+        <TextField
+          name="email"
+          type="email"
+          label="E-mail"
+          placeholder="Enter your e-mail address"
+        />
+        <TextField
+          name="password"
+          type="password"
+          label="Password"
+          placeholder="Enter your password"
+          description={
+            <>
+              Forgot Password?
+              <LinkUnderline href="forgot-password" className="ml-1">
+                Click here to reset
+              </LinkUnderline>
+            </>
+          }
+        />
+      </CardForm>
       <CardFooter className="flex flex-col gap-5">
         <span className="text-sm">
           {`Don't have an account? `}
