@@ -2,6 +2,7 @@
 
 namespace App\Core\Exceptions;
 
+use App\Core\Traits\ThrowException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -10,6 +11,8 @@ use Throwable;
 
 class Handler extends ExceptionHandler
 {
+    use ThrowException;
+
     /**
      * The list of the inputs that are never flashed to the session on validation exceptions.
      *
@@ -31,11 +34,11 @@ class Handler extends ExceptionHandler
         });
 
         $this->renderable(function (QueryException $e) {
-            return response()->json(['error' => ['request' => 'There was an error making your request. Please try again.']], 500);
+            $this->throwExceptionHttpResponse('There was an error making your request. Please try again.');
         });
 
         $this->renderable(function (NotFoundHttpException $e) {
-            return response()->json(['error' => ['request' => 'Not Found.']], 404);
+            $this->throwExceptionHttpResponse('Not Found.', 404);
         });
     }
 }
