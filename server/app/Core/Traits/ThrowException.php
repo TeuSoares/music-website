@@ -14,6 +14,6 @@ trait ThrowException
 
     public function throwExceptionHttpResponse(string $message, int $status_code = 500): void
     {
-        throw new HttpResponseException(response()->json(['error' => ['request' => $message]], $status_code));
+        throw new HttpResponseException(response()->json(['errors' => ['request' => [$message]]], $status_code));
     }
 }
