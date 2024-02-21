@@ -68,6 +68,6 @@ class DeleteTest extends TestCase
         $response = $this->deleteJson(route('music.destroy', ['id' => 50]));
 
         $response->assertStatus(404)
-            ->assertJson(['error' => ['request' => 'Not Found.']]);
+            ->assertJson(['errors' => ['request' => ['Not Found.']]]);
     }
 }
