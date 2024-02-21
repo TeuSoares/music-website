@@ -16,7 +16,7 @@ export default function ForgotPassword() {
       <CardForm
         title="Forgot Password?"
         description="Enter your email address to reset your password."
-        textButton="To Send"
+        textButton="Send"
         formSchema={formSchema}
         onSubmit={onSubmit}
       >
