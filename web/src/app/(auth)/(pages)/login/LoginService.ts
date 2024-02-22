@@ -2,16 +2,19 @@ import { useRouter } from 'next/navigation'
 
 import { LoginFormData } from './formSchema'
 
-import { useError, useFetch, useMessage } from '@/hooks'
+import { useError, useFetch, useMessage, useAppContext } from '@/hooks'
 import { setCookie } from 'cookies-next'
 
 export default function LoginService() {
   const { setMessage } = useMessage()
   const { setError } = useError()
   const { post, csrfToken } = useFetch()
+  const { setIsLoading } = useAppContext()
   const router = useRouter()
 
   const handleLogin = async (formData: LoginFormData) => {
+    setIsLoading(true)
+
     await csrfToken().then(async () => {
       try {
         const response = await post('login', formData)
@@ -29,6 +32,8 @@ export default function LoginService() {
         setError(error, ['email', 'password', 'authetication'])
       }
     })
+
+    setIsLoading(false)
   }
 
   return { handleLogin }

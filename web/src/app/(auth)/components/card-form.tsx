@@ -7,6 +7,8 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 
+import { useAppContext } from '@/hooks'
+
 interface CardFormProps extends FormProps {
   title: string
   textButton: string
@@ -22,6 +24,8 @@ const CardForm = ({
   formSchema,
   onSubmit,
 }: CardFormProps) => {
+  const { isLoading } = useAppContext()
+
   return (
     <>
       <CardHeader>
@@ -36,7 +40,7 @@ const CardForm = ({
           defaultValues={defaultValues}
         >
           {children}
-          <FormButton>{textButton}</FormButton>
+          <FormButton disabled={isLoading}>{textButton}</FormButton>
         </Form>
       </CardContent>
     </>
