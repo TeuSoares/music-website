@@ -1,4 +1,5 @@
 import { api } from '@/services/config/api'
+import axios from 'axios'
 
 export const useFetch = () => {
   const get = async (url: string) => {
@@ -21,5 +22,11 @@ export const useFetch = () => {
     return data
   }
 
-  return { get, post, put, destroy }
+  const csrfToken = async () => {
+    return await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/sanctum/csrf-cookie`,
+    )
+  }
+
+  return { get, post, put, destroy, csrfToken }
 }
