@@ -5,12 +5,11 @@ import CardForm from '@/app/(auth)/components/card-form'
 import TextField from '@/components/form/components/text-field'
 import LinkUnderline from '@/components/layout/link-underline'
 
-import { formSchema, LoginFormData } from './formSchema'
+import { formSchema } from './formSchema'
+import LoginService from './LoginService'
 
 export default function Login() {
-  const onSubmit = (values: LoginFormData) => {
-    console.log(values)
-  }
+  const { handleLogin } = LoginService()
 
   return (
     <>
@@ -19,7 +18,7 @@ export default function Login() {
         description="Log in to listen to your music."
         textButton="Log In"
         formSchema={formSchema}
-        onSubmit={onSubmit}
+        onSubmit={handleLogin}
         defaultValues={{
           email: '',
           password: '',
