@@ -8,7 +8,7 @@ api.defaults.withXSRFToken = true
 api.defaults.headers.options = {
   'X-Requested-With': 'XMLHttpRequest',
   'Content-Type': 'application/json',
-  Authorization: `Bearer ${getCookie('token')}`,
+  ...(getCookie('token') && { Authorization: `Bearer ${getCookie('token')}` }),
 }
 
 api.interceptors.response.use(
