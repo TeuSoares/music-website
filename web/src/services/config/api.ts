@@ -1,22 +1,15 @@
 import axios from 'axios'
 import { getCookie, deleteCookie } from 'cookies-next'
 
-const baseURL = `${process.env.NEXT_PUBLIC_API_URL}/api`
+const api = axios.create({ baseURL: `${process.env.NEXT_PUBLIC_API_URL}/api` })
 
-const withCredentials = true
-
-const headers = {
-  'Access-Control-Allow-Origin': '*',
+api.defaults.withCredentials = true
+api.defaults.withXSRFToken = true
+api.defaults.headers.options = {
   'X-Requested-With': 'XMLHttpRequest',
   'Content-Type': 'application/json',
   Authorization: `Bearer ${getCookie('token')}`,
 }
-
-const api = axios.create({
-  baseURL,
-  withCredentials,
-  headers,
-})
 
 api.interceptors.response.use(
   (response) => {
