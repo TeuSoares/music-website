@@ -33,8 +33,6 @@ export default function ResetPassword({ params }: ResetPasswordProps) {
         onSubmit={onSubmit}
         defaultValues={{
           email: searchParams.get('email'),
-          password: '',
-          password_confirmation: '',
         }}
       >
         <TextField name="email" type="email" label="E-mail" disabled />

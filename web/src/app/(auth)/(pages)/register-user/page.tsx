@@ -19,12 +19,6 @@ export default function RegisterUser() {
         textButton="Sign Up"
         formSchema={formSchema}
         onSubmit={onSubmit}
-        defaultValues={{
-          name: '',
-          email: '',
-          password: '',
-          password_confirmation: '',
-        }}
       >
         <TextField name="name" label="Name" placeholder="Write your fullname" />
         <TextField
