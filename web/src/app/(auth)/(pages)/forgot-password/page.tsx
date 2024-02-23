@@ -4,12 +4,11 @@ import CardFooterLink from '../../components/card-footer-link'
 import CardForm from '@/app/(auth)/components/card-form'
 import TextField from '@/components/form/components/text-field'
 
-import { formSchema, ForgotPasswordFormData } from './formSchema'
+import ForgotPasswordService from './ForgotPasswordService'
+import { formSchema } from './formSchema'
 
 export default function ForgotPassword() {
-  const onSubmit = (values: ForgotPasswordFormData) => {
-    console.log(values)
-  }
+  const { handleForgotPassword } = ForgotPasswordService()
 
   return (
     <>
@@ -18,7 +17,10 @@ export default function ForgotPassword() {
         description="Enter your email address to reset your password."
         textButton="Send"
         formSchema={formSchema}
-        onSubmit={onSubmit}
+        onSubmit={handleForgotPassword}
+        defaultValues={{
+          email: '',
+        }}
       >
         <TextField
           name="email"
