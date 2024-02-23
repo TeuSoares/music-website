@@ -2,7 +2,11 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 export function middleware(request: NextRequest) {
-  if (!request.cookies.has('token') && request.nextUrl.pathname == '/') {
+  if (
+    !request.cookies.has('token') &&
+    (request.nextUrl.pathname == '/' ||
+      request.nextUrl.pathname.startsWith('/email'))
+  ) {
     return NextResponse.redirect(new URL('/login', request.url))
   }
 
@@ -11,8 +15,7 @@ export function middleware(request: NextRequest) {
     (request.nextUrl.pathname == '/login' ||
       request.nextUrl.pathname == '/register-user' ||
       request.nextUrl.pathname == '/forgot-password' ||
-      request.nextUrl.pathname.startsWith('/password') ||
-      request.nextUrl.pathname.startsWith('/email'))
+      request.nextUrl.pathname.startsWith('/password'))
   ) {
     return NextResponse.redirect(new URL('/', request.url))
   }
