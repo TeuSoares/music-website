@@ -13,6 +13,8 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 
+import EmailService from '../../../EmailService'
+
 interface VerifyEmailProps {
   params: {
     id: string
@@ -23,17 +25,20 @@ interface VerifyEmailProps {
 export default function VerifyEmail({ params }: VerifyEmailProps) {
   const searchParams = useSearchParams()
 
+  const { handleVerifyEmail } = EmailService()
+
   useEffect(() => {
-    const handleVerifyEmail = async () => {
+    const verifyEmail = async () => {
       const expires = searchParams.get('expires')
       const signature = searchParams.get('signature')
 
       const url = `/email/verify/${params.id}/${params.hash}?expires=${expires}&signature=${signature}`
-      console.log(url)
+
+      await handleVerifyEmail(url)
     }
 
-    handleVerifyEmail()
-  }, [searchParams, params])
+    verifyEmail()
+  }, [])
 
   return (
     <>
