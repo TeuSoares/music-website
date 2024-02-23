@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 
 import { useAppContext, useError, useMessage } from '@/hooks'
 import { handleLogout } from '@/services/http/logout'
+import { deleteCookie } from 'cookies-next'
 
 const Header = () => {
   const { setError } = useError()
@@ -18,14 +19,16 @@ const Header = () => {
     setIsLoading(true)
 
     try {
-      const data = await handleLogout()
+      const { data } = await handleLogout()
+
+      deleteCookie('token')
 
       setMessage({
         description: data.message,
         status: 'success',
       })
 
-      router.push('login')
+      router.push('/login')
     } catch (error: any) {
       setError(error)
     }
