@@ -5,7 +5,8 @@ import { useSearchParams } from 'next/navigation'
 import CardForm from '@/app/(auth)/components/card-form'
 import TextField from '@/components/form/components/text-field'
 
-import { formSchema, ResetPasswordFormData } from '../../formSchema'
+import { formSchema, ResetPasswordFormData } from '../formSchema'
+import PasswordService from '../PasswordService'
 
 interface ResetPasswordProps {
   params: {
@@ -15,13 +16,16 @@ interface ResetPasswordProps {
 
 export default function ResetPassword({ params }: ResetPasswordProps) {
   const searchParams = useSearchParams()
+  const { handleResetPassword } = PasswordService()
 
-  const onSubmit = (values: ResetPasswordFormData) => {
+  const onSubmit = async (values: ResetPasswordFormData): Promise<void> => {
     const formData = {
       token: params.token,
+      email: searchParams.get('email'),
       ...values,
     }
-    console.log(formData)
+
+    await handleResetPassword(formData)
   }
 
   return (
@@ -32,10 +36,10 @@ export default function ResetPassword({ params }: ResetPasswordProps) {
         formSchema={formSchema}
         onSubmit={onSubmit}
         defaultValues={{
-          email: searchParams.get('email'),
+          password: '',
+          password_confirmation: '',
         }}
       >
-        <TextField name="email" type="email" label="E-mail" disabled />
         <TextField
           name="password"
           type="password"
