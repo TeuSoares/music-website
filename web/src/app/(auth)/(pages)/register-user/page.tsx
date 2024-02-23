@@ -4,12 +4,11 @@ import CardFooterLink from '../../components/card-footer-link'
 import CardForm from '@/app/(auth)/components/card-form'
 import TextField from '@/components/form/components/text-field'
 
-import { formSchema, CreateUserFormData } from './formSchema'
+import { formSchema } from './formSchema'
+import RegisterService from './RegisterService'
 
 export default function RegisterUser() {
-  const onSubmit = (values: CreateUserFormData) => {
-    console.log(values)
-  }
+  const { handleRegister } = RegisterService()
 
   return (
     <>
@@ -18,7 +17,13 @@ export default function RegisterUser() {
         description="Sign Up to listen and record to your music."
         textButton="Sign Up"
         formSchema={formSchema}
-        onSubmit={onSubmit}
+        onSubmit={handleRegister}
+        defaultValues={{
+          name: '',
+          email: '',
+          password: '',
+          password_confirmation: '',
+        }}
       >
         <TextField name="name" label="Name" placeholder="Write your fullname" />
         <TextField
