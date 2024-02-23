@@ -1,7 +1,11 @@
+import { useError } from '.'
+
 import { api } from '@/services/config/api'
 import axios from 'axios'
 
 export const useFetch = () => {
+  const { setError } = useError()
+
   const get = async (url: string) => {
     const { data } = await api.get(url)
     return data
@@ -23,9 +27,13 @@ export const useFetch = () => {
   }
 
   const csrfToken = async () => {
-    return await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/sanctum/csrf-cookie`,
-    )
+    try {
+      return await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/sanctum/csrf-cookie`,
+      )
+    } catch (error: any) {
+      setError(error, ['request'])
+    }
   }
 
   return { get, post, put, destroy, csrfToken }
