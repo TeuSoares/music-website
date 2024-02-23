@@ -29,7 +29,7 @@ export default function LoginService() {
 
         router.push('/')
       } catch (error: any) {
-        setError(error, ['email', 'password', 'authetication'])
+        setError(error, ['email', 'password', 'authetication', 'request'])
       }
     })
 

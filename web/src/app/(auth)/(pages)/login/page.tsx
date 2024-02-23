@@ -19,6 +19,10 @@ export default function Login() {
         textButton="Log In"
         formSchema={formSchema}
         onSubmit={handleLogin}
+        defaultValues={{
+          email: '',
+          password: '',
+        }}
       >
         <TextField
           name="email"
