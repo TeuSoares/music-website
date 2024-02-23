@@ -1,5 +1,7 @@
 import Footer from '@/components/footer'
 import Header from '@/components/header'
+import Loading from '@/components/layout/loading'
+import { Toaster } from '@/components/ui/toaster'
 
 export default function RootLayoutMusic({
   children,
@@ -8,6 +10,8 @@ export default function RootLayoutMusic({
 }>) {
   return (
     <>
+      <Toaster />
+      <Loading />
       <Header />
       <main>{children}</main>
       <Footer />
