@@ -1,8 +1,8 @@
 import { useRouter } from 'next/navigation'
 
-import { CreateUserFormData } from './formSchema'
-
 import { useError, useFetch, useMessage, useAppContext } from '@/hooks'
+
+import { CreateUserFormData } from './formSchema'
 
 export default function RegisterService() {
   const { setMessage } = useMessage()
@@ -27,13 +27,7 @@ export default function RegisterService() {
 
         router.push('login')
       } catch (error: any) {
-        setError(error, [
-          'name',
-          'email',
-          'password',
-          'password_confirmation',
-          'request',
-        ])
+        setError(error, ['name', 'email', 'password', 'password_confirmation'])
       }
     })
 
