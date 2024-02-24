@@ -14,7 +14,7 @@ export default function EmailService() {
     try {
       await get(url)
     } catch (error: any) {
-      setError(error, ['request'])
+      setError(error)
 
       router.push('/')
     }
