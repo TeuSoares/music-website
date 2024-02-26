@@ -48,7 +48,9 @@
                 "groups": [
                     ["/^react/", "/^next/"],
                     "/absolute/",
-                    "/^module/",
+                    "/module/",
+                    "/services/",
+                    "/hooks/",
                     "/utils/",
                     "/components/",
                     ["parent", "sibling", "index"]

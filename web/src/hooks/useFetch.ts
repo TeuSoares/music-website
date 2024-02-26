@@ -1,6 +1,7 @@
+import { api } from '@/services/config/api'
+
 import { useError } from '.'
 
-import { api } from '@/services/config/api'
 import axios from 'axios'
 
 export const useFetch = () => {
@@ -32,7 +33,7 @@ export const useFetch = () => {
         `${process.env.NEXT_PUBLIC_API_URL}/sanctum/csrf-cookie`,
       )
     } catch (error: any) {
-      setError(error, ['request'])
+      setError(error)
     }
   }
 

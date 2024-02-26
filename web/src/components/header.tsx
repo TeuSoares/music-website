@@ -3,10 +3,12 @@
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
-import { Button } from '@/components/ui/button'
+import { handleLogout } from '@/services/http/logout'
 
 import { useAppContext, useError, useMessage } from '@/hooks'
-import { handleLogout } from '@/services/http/logout'
+
+import { Button } from '@/components/ui/button'
+
 import { deleteCookie } from 'cookies-next'
 
 const Header = () => {

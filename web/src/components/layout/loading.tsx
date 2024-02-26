@@ -1,6 +1,7 @@
 'use client'
 
 import { useAppContext } from '@/hooks'
+
 import { Loader2 } from 'lucide-react'
 
 const Loading = () => {

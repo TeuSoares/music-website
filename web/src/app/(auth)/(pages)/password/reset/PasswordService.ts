@@ -1,8 +1,8 @@
 import { useRouter } from 'next/navigation'
 
-import { ResetPasswordFormData } from './formSchema'
-
 import { useError, useFetch, useMessage, useAppContext } from '@/hooks'
+
+import { ResetPasswordFormData } from './formSchema'
 
 export default function PasswordService() {
   const { setMessage } = useMessage()
@@ -27,13 +27,7 @@ export default function PasswordService() {
 
         router.push('/login')
       } catch (error: any) {
-        setError(error, [
-          'token',
-          'email',
-          'password',
-          'password_confirmation',
-          'request',
-        ])
+        setError(error, ['token', 'email', 'password', 'password_confirmation'])
       }
     })
 

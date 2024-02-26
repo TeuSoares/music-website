@@ -1,10 +1,11 @@
 import { useRouter } from 'next/navigation'
 
+import { useError, useFetch, useMessage, useAppContext } from '@/hooks'
+
 import { setHours } from '@/utils/helpers'
 
 import { LoginFormData } from './formSchema'
 
-import { useError, useFetch, useMessage, useAppContext } from '@/hooks'
 import { setCookie } from 'cookies-next'
 
 export default function LoginService() {
@@ -33,7 +34,7 @@ export default function LoginService() {
 
         router.push('/')
       } catch (error: any) {
-        setError(error, ['email', 'password', 'authetication', 'request'])
+        setError(error, ['email', 'password', 'authetication'])
       }
     })
 

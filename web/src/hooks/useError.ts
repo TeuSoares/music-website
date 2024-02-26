@@ -30,6 +30,11 @@ export const useError = () => {
       }
     }
 
+    if (errors.request) {
+      setMessage({ description: errors.request[0], status: 'error' })
+      return
+    }
+
     setMessage({ description: errors[0] as string, status: 'error' })
   }
 
