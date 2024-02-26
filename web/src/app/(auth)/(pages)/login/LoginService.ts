@@ -1,5 +1,7 @@
 import { useRouter } from 'next/navigation'
 
+import { setHours } from '@/utils/helpers'
+
 import { LoginFormData } from './formSchema'
 
 import { useError, useFetch, useMessage, useAppContext } from '@/hooks'
@@ -25,7 +27,9 @@ export default function LoginService() {
           status: 'success',
         })
 
-        setCookie('token', response.data.token)
+        setCookie('token', response.data.token, {
+          expires: setHours(7),
+        })
 
         router.push('/')
       } catch (error: any) {
