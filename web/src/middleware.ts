@@ -7,6 +7,7 @@ export function middleware(request: NextRequest) {
     (request.nextUrl.pathname == '/' ||
       request.nextUrl.pathname.startsWith('/email'))
   ) {
+    request.cookies.delete('token')
     return NextResponse.redirect(new URL('/login', request.url))
   }
 
