@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
+import { useQuery } from 'react-query'
 
-import EmailService from '../../EmailService'
+import { useAppContext, useFetch } from '@/hooks'
 
 export const useVerifyEmail = (
   id: string,
@@ -8,21 +9,20 @@ export const useVerifyEmail = (
   expires: string,
   signature: string,
 ) => {
-  const [status, setStatus] = useState<string | null>(null)
+  const { get } = useFetch()
+  const { setIsLoading } = useAppContext()
 
-  const { handleVerifyEmail } = EmailService()
+  const url = `/email/verify/${id}/${hash}?expires=${expires}&signature=${signature}`
+
+  const { data, isLoading, error } = useQuery(
+    'verifyEmail',
+    async () => await get(url),
+    { refetchOnWindowFocus: false },
+  )
 
   useEffect(() => {
-    const verifyEmail = async () => {
-      const url = `/email/verify/${id}/${hash}?expires=${expires}&signature=${signature}`
+    setIsLoading(isLoading)
+  }, [isLoading, setIsLoading])
 
-      const response = await handleVerifyEmail(url)
-
-      setStatus(response)
-    }
-
-    verifyEmail()
-  }, [])
-
-  return { status }
+  return { data, error }
 }
