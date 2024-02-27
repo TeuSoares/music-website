@@ -1,14 +1,13 @@
 'use client'
 
 import { useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
 
+import { useVerifyEmail } from '../../hooks/useVerifyEmail'
 import { useAppContext } from '@/hooks'
 
-import CardChecked from './components/card-checked'
-import CardFailed from './components/card-failed'
-
-import EmailService from '../../../EmailService'
+import CardChecked from '../../components/card-checked'
+import CardFailed from '../../components/card-failed'
+import { Card } from '@/components/ui/card'
 
 interface VerifyEmailProps {
   params: {
@@ -18,31 +17,27 @@ interface VerifyEmailProps {
 }
 
 export default function VerifyEmail({ params }: VerifyEmailProps) {
-  const [isChecked, setIsChecked] = useState(false)
   const { isLoading } = useAppContext()
   const searchParams = useSearchParams()
 
-  const { handleVerifyEmail } = EmailService()
+  const expires = searchParams.get('expires')
+  const signature = searchParams.get('signature')
 
-  useEffect(() => {
-    const verifyEmail = async () => {
-      const expires = searchParams.get('expires')
-      const signature = searchParams.get('signature')
-
-      const url = `/email/verify/${params.id}/${params.hash}?expires=${expires}&signature=${signature}`
-
-      const status = await handleVerifyEmail(url)
-
-      setIsChecked(status)
-    }
-
-    verifyEmail()
-  }, [])
+  const { status } = useVerifyEmail(
+    params.id,
+    params.hash,
+    expires!,
+    signature!,
+  )
 
   return (
-    <>
-      {!isLoading && isChecked && <CardChecked />}
-      {!isLoading && !isChecked && <CardFailed />}
-    </>
+    <div className="w-[100vw] h-[100vh] flex justify-center items-center">
+      {!isLoading && status && (
+        <Card className="min-[450px]:w-[450px]">
+          {status == 'checked' && <CardChecked />}
+          {status == 'failed' && <CardFailed />}
+        </Card>
+      )}
+    </div>
   )
 }
