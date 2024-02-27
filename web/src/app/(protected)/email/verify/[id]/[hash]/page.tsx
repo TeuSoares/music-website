@@ -1,17 +1,12 @@
 'use client'
 
 import { useSearchParams } from 'next/navigation'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
-import BulletPoint from '@/components/layout/bullet-point'
-import LinkUnderline from '@/components/layout/link-underline'
-import {
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import { useAppContext } from '@/hooks'
+
+import CardChecked from './components/card-checked'
+import CardFailed from './components/card-failed'
 
 import EmailService from '../../../EmailService'
 
@@ -23,6 +18,8 @@ interface VerifyEmailProps {
 }
 
 export default function VerifyEmail({ params }: VerifyEmailProps) {
+  const [isChecked, setIsChecked] = useState(false)
+  const { isLoading } = useAppContext()
   const searchParams = useSearchParams()
 
   const { handleVerifyEmail } = EmailService()
@@ -34,7 +31,9 @@ export default function VerifyEmail({ params }: VerifyEmailProps) {
 
       const url = `/email/verify/${params.id}/${params.hash}?expires=${expires}&signature=${signature}`
 
-      await handleVerifyEmail(url)
+      const status = await handleVerifyEmail(url)
+
+      setIsChecked(status)
     }
 
     verifyEmail()
@@ -42,28 +41,8 @@ export default function VerifyEmail({ params }: VerifyEmailProps) {
 
   return (
     <>
-      <CardHeader>
-        <CardTitle>Successful Email Verification</CardTitle>
-        <CardDescription>
-          Your email has been successfully verified. Now you can listen to your
-          music without any problems
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <BulletPoint
-          title="Have fun with favorite songs"
-          description="Listen to your musics anywhere."
-        />
-        <BulletPoint
-          title="Practicality in everyday life"
-          description="Manage your music in one place."
-        />
-      </CardContent>
-      <CardFooter>
-        <LinkUnderline href="/" className="mt-2">
-          Click here to return to home page
-        </LinkUnderline>
-      </CardFooter>
+      {!isLoading && isChecked && <CardChecked />}
+      {!isLoading && !isChecked && <CardFailed />}
     </>
   )
 }
