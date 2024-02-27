@@ -1,9 +1,13 @@
-import Footer from '@/components/footer'
-import Header from '@/components/header'
+'use client'
+
+import { QueryClient, QueryClientProvider } from 'react-query'
+
 import Loading from '@/components/layout/loading'
 import { Toaster } from '@/components/ui/toaster'
 
-export default function RootLayoutMusic({
+const queryClient = new QueryClient()
+
+export default function RootLayoutProtected({
   children,
 }: Readonly<{
   children: React.ReactNode
@@ -12,9 +16,7 @@ export default function RootLayoutMusic({
     <>
       <Toaster />
       <Loading />
-      <Header />
-      <main>{children}</main>
-      <Footer />
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </>
   )
 }
