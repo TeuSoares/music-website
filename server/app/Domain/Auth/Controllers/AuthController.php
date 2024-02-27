@@ -41,9 +41,9 @@ class AuthController extends Controller
         return $this->responseMessage('User created successfully.', 201);
     }
 
-    public function verifyEmail(EmailVerificationRequest $request): JsonResponse
+    public function verifyEmail(Request $request): JsonResponse
     {
-        $request->fulfill();
+        $this->service->verifyEmail($request->user());
 
         return $this->responseMessage('E-mail verification successfully.');
     }

@@ -21,6 +21,9 @@ class EmailVerificationTest extends TestCase
     {
         $user = $this->userAuthenticated();
 
+        $user->email_verified_at = null;
+        $user->save();
+
         $url_signed = URL::temporarySignedRoute(
             'auth.verification.verify',
             Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
@@ -34,6 +37,33 @@ class EmailVerificationTest extends TestCase
 
         $response->assertStatus(200)
             ->assertSee('E-mail verification successfully.');
+
+        $this->assertDatabaseHas('users', [
+            'email_verified_at' => now(),
+        ]);
+    }
+
+    public function test_should_verification_email_failed_if_it_fill(): void
+    {
+        $user = $this->userAuthenticated();
+
+        $url_signed = URL::temporarySignedRoute(
+            'auth.verification.verify',
+            Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
+            [
+                'id' => $user->getKey(),
+                'hash' => sha1($user->getEmailForVerification()),
+            ]
+        );
+
+        $response = $this->getJson($url_signed);
+
+        $response->assertStatus(403)
+            ->assertExactJson([
+                'errors' => [
+                    'request' => ['Email has already been verified.']
+                ]
+            ]);
 
         $this->assertDatabaseHas('users', [
             'email_verified_at' => now(),

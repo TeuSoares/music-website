@@ -8,6 +8,7 @@ use Domain\User\Models\User;
 use Domain\User\Repositories\UserRepositoryInterface;
 
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
 
@@ -63,5 +64,16 @@ class AuthService
         }
 
         $this->throwExceptionHttpResponse('Error resetting password. Please try again');
+    }
+
+    public function verifyEmail(User $user): void
+    {
+        if ($user->hasVerifiedEmail()) {
+            $this->throwExceptionHttpResponse('Email has already been verified.', 403);
+        }
+
+        $user->markEmailAsVerified();
+
+        event(new Verified(auth()->user()));
     }
 }
