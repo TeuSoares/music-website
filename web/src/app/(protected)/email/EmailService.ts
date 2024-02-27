@@ -4,16 +4,14 @@ export default function EmailService() {
   const { get } = useFetch()
   const { setIsLoading } = useAppContext()
 
-  const handleVerifyEmail = async (url: string): Promise<boolean> => {
-    setIsLoading(true)
-
+  const handleVerifyEmail = async (url: string): Promise<string> => {
     try {
       await get(url)
       setIsLoading(false)
-      return true
+      return 'checked'
     } catch (error) {
       setIsLoading(false)
-      return false
+      return 'failed'
     }
   }
 
