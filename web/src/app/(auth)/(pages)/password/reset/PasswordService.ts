@@ -27,7 +27,15 @@ export default function PasswordService() {
 
         router.push('/login')
       } catch (error: any) {
-        setError(error, ['token', 'email', 'password', 'password_confirmation'])
+        const errors = error.response.data.errors
+
+        if (errors.token) {
+          setMessage({ description: errors.token[0], status: 'error' })
+          router.push('/login')
+          return
+        }
+
+        setError(error, ['email', 'password', 'password_confirmation'])
       }
     })
 
