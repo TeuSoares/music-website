@@ -21,9 +21,8 @@ api.interceptors.response.use(
   (response) => {
     return response
   },
-  async (error) => {
+  (error) => {
     if (error.response.status == 401 || error.response.status == 403) {
-      await api.post('logout')
       deleteCookie('token')
       window.location.href = '/login'
     } else {
