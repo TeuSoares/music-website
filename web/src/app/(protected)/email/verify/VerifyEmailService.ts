@@ -1,18 +1,11 @@
 import { useEffect } from 'react'
 import { useQuery } from 'react-query'
 
-import { useAppContext, useFetch } from '@/hooks'
+import { useFetch, useAppContext } from '@/hooks'
 
-export const useVerifyEmail = (
-  id: string,
-  hash: string,
-  expires: string,
-  signature: string,
-) => {
+export default function VerifyEmailService(url: string) {
   const { get } = useFetch()
   const { setIsLoading } = useAppContext()
-
-  const url = `/email/verify/${id}/${hash}?expires=${expires}&signature=${signature}`
 
   const { data, isLoading, error } = useQuery(
     'verifyEmail',
