@@ -1,42 +1,13 @@
 'use client'
 
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 
-import { handleLogout } from '@/services/http/logout'
-
-import { useAppContext, useError, useMessage } from '@/hooks'
+import { useLogout } from '@/hooks/useLogout'
 
 import { Button } from '@/components/ui/button'
 
-import { deleteCookie } from 'cookies-next'
-
 const Header = () => {
-  const { setError } = useError()
-  const { setMessage } = useMessage()
-  const { setIsLoading } = useAppContext()
-  const router = useRouter()
-
-  const logout = async () => {
-    setIsLoading(true)
-
-    try {
-      const { data } = await handleLogout()
-
-      deleteCookie('token')
-
-      setMessage({
-        description: data.message,
-        status: 'success',
-      })
-
-      router.push('/login')
-    } catch (error: any) {
-      setError(error)
-    }
-
-    setIsLoading(false)
-  }
+  const { handleLogout } = useLogout()
 
   return (
     <header className="p-4 text-center bg-[#111111]">
@@ -48,7 +19,7 @@ const Header = () => {
 
       <Button
         className="bg-transparent hover:bg-transparent text-white font-bold hover:text-[#BC2627]"
-        onClick={logout}
+        onClick={handleLogout}
       >
         Logout
       </Button>

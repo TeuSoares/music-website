@@ -1,5 +1,6 @@
 import { api } from '../config/api'
 
-export const handleLogout = async () => {
-  return await api.post('logout')
+export const logout = async () => {
+  const { data } = await api.post('logout')
+  return data
 }
