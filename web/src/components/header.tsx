@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 
-import { useLogout } from '@/hooks/useLogout'
+import { useLogout } from '@/hooks'
 
 import { Button } from '@/components/ui/button'
 
