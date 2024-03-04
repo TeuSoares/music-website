@@ -11,9 +11,23 @@ jest.mock('next/navigation', () => ({
 }))
 
 describe('Login Page', () => {
-  const screen = render(<Login />)
-
   it('should render the login page correctly', () => {
-    screen.getByText(/Log in to listen to your music/i)
+    const { getByText } = render(<Login />)
+
+    expect(getByText(/Log in to listen to your music/i)).toBeInTheDocument()
+  })
+
+  it('should render login page elements with these labels', () => {
+    const { getByText, getByLabelText } = render(<Login />)
+
+    const emailLabel = getByLabelText(/e-mail/i)
+    const passwordLabel = getByLabelText(/password/i)
+    const createAccountLink = getByText(/Create an account/i)
+    const forgotPasswordLink = getByText(/Forgot Password/i)
+
+    expect(emailLabel).toBeInTheDocument()
+    expect(passwordLabel).toBeInTheDocument()
+    expect(createAccountLink).toBeInTheDocument()
+    expect(forgotPasswordLink).toBeInTheDocument()
   })
 })
