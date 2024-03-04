@@ -1,11 +1,19 @@
 import Login from './page'
 
-import { render, screen } from '@testing-library/react'
+import { render } from '@testing-library/react'
+
+jest.mock('next/navigation', () => ({
+  useRouter() {
+    return {
+      prefetch: () => null,
+    }
+  },
+}))
 
 describe('Login Page', () => {
-  it('should render Login with Log In title', () => {
-    render(<Login />)
+  const screen = render(<Login />)
 
-    screen.getByText('Log In')
+  it('should render the login page correctly', () => {
+    screen.getByText(/Log in to listen to your music/i)
   })
 })
