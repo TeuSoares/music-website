@@ -1,35 +1,31 @@
-import LoginService from './LoginService'
 import Login from './page'
 
 import { fireEvent, render } from '@testing-library/react'
 
+const pushMock = jest.fn()
+
 jest.mock('next/navigation', () => ({
-  useRouter() {
+  ...jest.requireActual('next/navigation'),
+  useRouter: () => {
     return {
-      prefetch: () => null,
+      push: pushMock.mockImplementation((url) => pushMock(url)),
     }
   },
 }))
 
-// const mockNavigate = jest.fn()
-
-// jest.mock('next/navigation', () => ({
-//   ...jest.requireActual('next/navigation'),
-//   useRouter: () => {
-//     return {
-//       prefetch: () => null,
-//       mockNavigate,
-//     }
-//   },
-// }))
-
-jest.mock('./LoginService', () => {
-  const handleLogin = { handleLogin: jest.fn() }
-  return {
-    __esModule: true,
-    default: jest.fn(() => handleLogin),
-  }
-})
+jest.mock('./LoginService', () => ({
+  __esModule: true,
+  ...jest.requireActual('./LoginService'),
+  default: () => ({
+    handleLogin: jest.fn().mockImplementation(async (formData) => {
+      pushMock.call('/')
+      return {
+        email: 'bYw2Y@example.com',
+        password: '12345678',
+      }
+    }),
+  }),
+}))
 
 describe('Login Page', () => {
   it('should render the login page correctly', () => {
@@ -53,21 +49,22 @@ describe('Login Page', () => {
   })
 
   it('should be posible the user can login with correct credentials', async () => {
-    const { getByTestId } = render(<Login />)
+    const { getByTestId, debug, getByLabelText } = render(<Login />)
+
+    const email = getByLabelText(/e-mail/i)
+    const password = getByLabelText(/password/i)
+
+    fireEvent.input(email, { target: { value: 'bYw2Y@example.com' } })
+    fireEvent.input(password, { target: { value: '12345678' } })
 
     const button = getByTestId('button-submit')
 
     fireEvent.click(button)
 
-    const loginService = LoginService()
-
-    const obj = {}
-
-    loginService.handleLogin.call(obj, {
-      email: 'foo@example.com',
-      password: '12345678',
-    })
+    debug()
 
     expect(1 + 1).toBe(2)
+    expect(pushMock).toHaveBeenCalled()
+    expect(pushMock).toHaveBeenCalledWith('/')
   })
 })
