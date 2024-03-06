@@ -40,7 +40,9 @@ const CardForm = ({
           defaultValues={defaultValues}
         >
           {children}
-          <FormButton disabled={isLoading}>{textButton}</FormButton>
+          <FormButton data-testid="button-submit" disabled={isLoading}>
+            {textButton}
+          </FormButton>
         </Form>
       </CardContent>
     </>
