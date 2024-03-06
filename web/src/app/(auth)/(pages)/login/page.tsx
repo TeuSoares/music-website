@@ -14,7 +14,7 @@ export default function Login() {
   return (
     <>
       <CardForm
-        title="Log In"
+        title="Log In Now"
         description="Log in to listen to your music."
         textButton="Log In"
         formSchema={formSchema}
