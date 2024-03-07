@@ -1,6 +1,7 @@
 import Login from './page'
 
-import { fireEvent, render } from '@testing-library/react'
+import { fireEvent, render, waitFor } from '@testing-library/react'
+import { HttpResponse, http } from 'msw'
 
 const routerPushMock = jest.fn()
 
@@ -20,12 +21,12 @@ jest.mock('./LoginService', () => ({
   ...jest.requireActual('./LoginService'),
   default: () => ({
     handleLogin: handleLoginMock.mockImplementation(async (formData) => {
-      console.log(formData)
+      http.post('http://localhost/api/login', () => {
+        new HttpResponse(formData, { status: 200 })
+        return HttpResponse.json({ message: 'Login successfully' })
+      })
+
       routerPushMock('/')
-      return {
-        email: 'bYw2Y@example.com',
-        password: '12345678',
-      }
     }),
   }),
 }))
@@ -52,23 +53,22 @@ describe('Login Page', () => {
   })
 
   it('should be posible the user can login with correct credentials', async () => {
-    const { getByTestId, debug, getByLabelText } = render(<Login />)
+    const { getByTestId, getByLabelText } = render(<Login />)
 
     const email = getByLabelText(/e-mail/i)
     const password = getByLabelText(/password/i)
 
-    fireEvent.input(email, { target: { value: 'bYw2Y@example.com' } })
+    fireEvent.input(email, { target: { value: 'teste@gmail.com' } })
     fireEvent.input(password, { target: { value: '12345678' } })
 
     const button = getByTestId('button-submit')
 
     fireEvent.click(button)
 
-    debug()
-
-    expect(1 + 1).toBe(2)
-    expect(handleLoginMock).toHaveBeenCalled()
-    expect(routerPushMock).toHaveBeenCalled()
-    expect(routerPushMock).toHaveBeenCalledWith('/')
+    await waitFor(() => {
+      expect(handleLoginMock).toHaveBeenCalled()
+      expect(routerPushMock).toHaveBeenCalled()
+      expect(routerPushMock).toHaveBeenCalledWith('/')
+    })
   })
 })
