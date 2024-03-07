@@ -2,23 +2,26 @@ import Login from './page'
 
 import { fireEvent, render } from '@testing-library/react'
 
-const pushMock = jest.fn()
+const routerPushMock = jest.fn()
 
 jest.mock('next/navigation', () => ({
   ...jest.requireActual('next/navigation'),
   useRouter: () => {
     return {
-      push: pushMock.mockImplementation((url) => pushMock(url)),
+      push: routerPushMock.mockImplementation((url) => routerPushMock(url)),
     }
   },
 }))
+
+const handleLoginMock = jest.fn()
 
 jest.mock('./LoginService', () => ({
   __esModule: true,
   ...jest.requireActual('./LoginService'),
   default: () => ({
-    handleLogin: jest.fn().mockImplementation(async (formData) => {
-      pushMock.call('/')
+    handleLogin: handleLoginMock.mockImplementation(async (formData) => {
+      console.log(formData)
+      routerPushMock('/')
       return {
         email: 'bYw2Y@example.com',
         password: '12345678',
@@ -64,7 +67,8 @@ describe('Login Page', () => {
     debug()
 
     expect(1 + 1).toBe(2)
-    expect(pushMock).toHaveBeenCalled()
-    expect(pushMock).toHaveBeenCalledWith('/')
+    expect(handleLoginMock).toHaveBeenCalled()
+    expect(routerPushMock).toHaveBeenCalled()
+    expect(routerPushMock).toHaveBeenCalledWith('/')
   })
 })
