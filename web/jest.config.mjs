@@ -15,6 +15,7 @@ const config = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
+  globals: { TextEncoder: TextEncoder, TextDecoder: TextDecoder, Response },
 }
 
 export default createJestConfig(config)
