@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from 'react-query'
 
 import VerifyEmail from './[id]/[hash]/page'
+import * as VerifyEmailService from './VerifyEmailService'
 
 import { render } from '@testing-library/react'
 
@@ -11,13 +12,12 @@ jest.mock('next/navigation', () => ({
   }),
 }))
 
-const verifyEmailMock = jest.fn()
-
 jest.mock('./VerifyEmailService', () => ({
   __esModule: true,
   ...jest.requireActual('./VerifyEmailService'),
-  default: verifyEmailMock,
 }))
+
+const verifyEmailMock = jest.spyOn(VerifyEmailService, 'default')
 
 describe('Verify Email Page', () => {
   it('should render the Verify Email page with success message', () => {
