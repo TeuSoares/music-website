@@ -29,7 +29,7 @@ const CardForm = ({
   return (
     <>
       <CardHeader>
-        <CardTitle>{title}</CardTitle>
+        <CardTitle data-testid="card-title">{title}</CardTitle>
         {description && <CardDescription>{description}</CardDescription>}
       </CardHeader>
       <CardContent>
