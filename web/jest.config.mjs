@@ -8,6 +8,7 @@ const createJestConfig = nextJest({
 const config = {
   testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  setupFiles: ['<rootDir>/jest.polyfills.js'],
   testMatch: [
     '<rootDir>/src/**/*.test.{ts,tsx}',
     '<rootDir>/src/**/*.spec.{ts,tsx}',
@@ -15,7 +16,6 @@ const config = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
-  globals: { TextEncoder: TextEncoder, TextDecoder: TextDecoder, Response },
 }
 
 export default createJestConfig(config)
