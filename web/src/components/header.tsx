@@ -1,22 +1,18 @@
 'use client'
 
-import Link from 'next/link'
-
 import { useLogout } from '@/hooks'
 
 import { Button } from '@/components/ui/button'
+
+import LinkButton from './layout/link-button'
 
 const Header = () => {
   const { handleLogout } = useLogout()
 
   return (
     <header className="p-4 text-center bg-[#111111]">
-      <Button className="bg-transparent hover:bg-transparent font-bold" asChild>
-        <Link href="/dashboard" className="text-white hover:text-[#BC2627]">
-          Dashboard
-        </Link>
-      </Button>
-
+      <LinkButton label="Home" href="/" />
+      <LinkButton label="Dashboard" href="/dashboard" />
       <Button
         className="bg-transparent hover:bg-transparent text-white font-bold hover:text-[#BC2627]"
         onClick={handleLogout}
