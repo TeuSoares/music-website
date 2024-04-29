@@ -2,8 +2,8 @@
 
 import { useSearchParams } from 'next/navigation'
 
-import CardForm from '@/app/(auth)/components/card-form'
 import TextField from '@/components/form/components/text-field'
+import CardForm from '@/components/layout/card-form'
 
 import { formSchema, ResetPasswordFormData } from '../formSchema'
 import PasswordService from '../PasswordService'

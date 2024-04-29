@@ -1,13 +1,14 @@
 import { useAppContext } from '@/hooks'
 
-import FormButton from '../../../components/form/components/form-button'
-import Form, { FormProps } from '../../../components/form/form'
+import FormButton from '../form/components/form-button'
 import {
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+
+import Form, { FormProps } from '../form/form'
 
 interface CardFormProps extends FormProps {
   title: string
