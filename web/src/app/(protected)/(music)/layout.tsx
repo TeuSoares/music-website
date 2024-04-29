@@ -10,7 +10,7 @@ export default function RootLayoutMusic({
   return (
     <>
       <Header />
-      <main className="py-10 px-5">
+      <main className="flex flex-col h-full">
         <Container>{children}</Container>
       </main>
       <Footer />

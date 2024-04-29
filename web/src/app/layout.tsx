@@ -18,7 +18,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-[#1e1e20]`}>
+      <body
+        className={`${inter.className} bg-[#1e1e20] flex flex-col h-screen`}
+      >
         <AppContextProvider>{children}</AppContextProvider>
       </body>
     </html>
