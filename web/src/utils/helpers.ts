@@ -9,10 +9,7 @@ export const setHours = (hours: number): Date => {
   return date
 }
 
-export const validateFile = (path: string): boolean => {
-  const fileName = path.substring(path.lastIndexOf('\\') + 1)
-  const file = new File([path], fileName, { type: 'image/jpeg' })
-
+export const validateFile = (file: File): boolean => {
   if (!file || !file.name) {
     return false
   }
