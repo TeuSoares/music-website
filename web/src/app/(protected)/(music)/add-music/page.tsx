@@ -2,12 +2,10 @@
 
 import FormMusic from '../components/form-music'
 
-import { MusicFormData } from '../formSchema'
+import MusicService from '../MusicService'
 
 export default function AddMusic() {
-  const handleAddMusic = (formData: MusicFormData) => {
-    console.log(formData)
-  }
+  const { handleAddMusic } = MusicService()
 
   return <FormMusic onSubmit={handleAddMusic} />
 }

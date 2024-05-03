@@ -1,3 +1,4 @@
+import FileField from '@/components/form/components/file-field'
 import TextField from '@/components/form/components/text-field'
 import CardForm from '@/components/layout/card-form'
 import Center from '@/components/layout/center'
@@ -53,11 +54,7 @@ const FormMusic = ({ onSubmit, data, id }: FormMusicProps) => {
             label="Youtube link for music"
             placeholder="Ex: https://www.youtube.com/watch?v=<youtube_id>"
           />
-          <TextField
-            name="thumbnail"
-            type="file"
-            label="Thumbnail (JPG or PNG)"
-          />
+          <FileField name="thumbnail" label="Thumbnail (JPG or PNG)" />
         </CardForm>
       </Card>
     </Center>

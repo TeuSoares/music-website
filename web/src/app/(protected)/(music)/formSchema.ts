@@ -39,7 +39,7 @@ export const formSchema = z.object({
       /^(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)[a-zA-Z0-9_-]{11}$/,
       'Invalid YouTube link',
     ),
-  thumbnail: z.custom((data) => validateFile(data as string), {
+  thumbnail: z.custom((data: any) => validateFile(data[0] as File), {
     message: 'Invalid file',
   }),
 })
