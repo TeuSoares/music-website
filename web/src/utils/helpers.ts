@@ -23,3 +23,21 @@ export const validateFile = (file: File): boolean => {
 
   return true
 }
+
+export const convertInFileList = (path: string) => {
+  const blob: Blob = new Blob([path], { type: 'image/jpeg' })
+
+  const file: File = new File([blob], 'updated_file.jpg', {
+    type: 'image/jpeg',
+  })
+
+  const dataTransfer = new DataTransfer()
+
+  const files = [file]
+
+  files.forEach((file) => {
+    dataTransfer.items.add(file)
+  })
+
+  return dataTransfer.files
+}
