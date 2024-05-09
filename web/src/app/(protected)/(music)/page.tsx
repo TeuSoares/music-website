@@ -1,8 +1,10 @@
 'use client'
 
 import Image from 'next/image'
-import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+
+import { useAppContext } from '@/hooks'
 
 import GhostButton from '@/components/layout/ghost-button'
 import {
@@ -25,6 +27,10 @@ export default function Home() {
   const [selectedNameMusic, setSelectedNameMusic] = useState<string | null>(
     null,
   )
+
+  const { setDataToUpdate } = useAppContext()
+
+  const router = useRouter()
 
   const { data, error, handleDeleteMusic } = MusicService()
 
@@ -109,10 +115,13 @@ export default function Home() {
               <TableCell>{music.artist}</TableCell>
               <TableCell>{music.name}</TableCell>
               <TableCell className="text-right">
-                <GhostButton asChild>
-                  <Link href={`/update-music/${music.id}`}>
-                    <Pencil className="h-4 w-4" />
-                  </Link>
+                <GhostButton
+                  onClick={() => {
+                    setDataToUpdate(music)
+                    router.push(`/${music.id}/update`)
+                  }}
+                >
+                  <Pencil className="h-4 w-4" />
                 </GhostButton>
                 <GhostButton onClick={() => handleDeleteMusic(music.id)}>
                   <Trash2 className="h-4 w-4" />

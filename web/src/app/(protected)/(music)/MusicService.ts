@@ -1,5 +1,3 @@
-// import { useRouter } from 'next/navigation'
-
 import { useEffect } from 'react'
 import { useQuery } from 'react-query'
 
@@ -26,7 +24,6 @@ export default function MusicService() {
   const { setError } = useError()
   const { post, get, destroy } = useFetch()
   const { setIsLoading, setResetFields } = useAppContext()
-  //   const router = useRouter()
 
   const { data, isLoading, error, refetch } = useQuery<IMusics>(
     'musics',

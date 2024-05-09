@@ -39,9 +39,18 @@ export const formSchema = z.object({
       /^(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)[a-zA-Z0-9_-]{11}$/,
       'Invalid YouTube link',
     ),
-  thumbnail: z.custom((data: any) => validateFile(data[0] as File), {
-    message: 'Invalid file',
-  }),
+  thumbnail: z.custom(
+    (data: any) => {
+      if (!data) {
+        return true
+      }
+
+      return validateFile(data[0] as File)
+    },
+    {
+      message: 'Invalid file',
+    },
+  ),
 })
 
 export type MusicFormData = z.infer<typeof formSchema>

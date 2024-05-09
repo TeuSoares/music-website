@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 import FileField from '@/components/form/components/file-field'
 import TextField from '@/components/form/components/text-field'
 import CardForm from '@/components/layout/card-form'
@@ -8,7 +10,15 @@ import { MusicFormData, formSchema } from '../formSchema'
 
 interface FormMusicProps {
   onSubmit: (data: MusicFormData) => void
-  data?: MusicFormData
+  data?: {
+    id: number
+    user_id: number
+    artist: string
+    genre: string
+    name: string
+    youtube_id: string
+    thumbnail: string
+  }
   id?: number
 }
 
@@ -30,8 +40,10 @@ const FormMusic = ({ onSubmit, data, id }: FormMusicProps) => {
             artist: data ? data.artist : '',
             name: data ? data.name : '',
             genre: data ? data.genre : '',
-            link_youtube: data ? data.link_youtube : '',
-            thumbnail: data ? data.thumbnail : '',
+            link_youtube: data
+              ? `https://www.youtube.com/watch?v=${data.youtube_id}`
+              : '',
+            thumbnail: '',
           }}
         >
           <TextField
@@ -55,6 +67,14 @@ const FormMusic = ({ onSubmit, data, id }: FormMusicProps) => {
             placeholder="Ex: https://www.youtube.com/watch?v=<youtube_id>"
           />
           <FileField name="thumbnail" label="Thumbnail (JPG or PNG)" />
+          {data && (
+            <Image
+              src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${data.thumbnail}`}
+              alt={data.name}
+              width={100}
+              height={100}
+            />
+          )}
         </CardForm>
       </Card>
     </Center>
