@@ -35,8 +35,8 @@ export default function Home() {
   const { data, error, handleDeleteMusic } = MusicService()
 
   return (
-    <div className="flex flex-col gap-5">
-      <div className="flex flex-col h-[500px] rounded-md border-2 border-white">
+    <div className="flex flex-col h-full gap-5">
+      <div className="flex flex-col h-[250px] min-[500px]:h-[450px] rounded-md border-2 border-white">
         <div className="bg-[#111111] p-1 w-full text-center border-b-2 border-white">
           <div className="flex justify-center items-center text-white font-bold gap-2">
             {selectedNameMusic && <Music />}
@@ -61,76 +61,78 @@ export default function Home() {
           ></iframe>
         )}
       </div>
-      <Table>
-        {!data?.data && !error && (
-          <TableCaption className="text-[#acacac]">{`You don't have a music on your album yet`}</TableCaption>
-        )}
-        <TableHeader>
-          <TableRow className="text-[#acacac]">
-            <TableHead className="w-[40px] text-center">#</TableHead>
-            <TableHead className="w-[100px]">Thumbnail</TableHead>
-            <TableHead>Artist</TableHead>
-            <TableHead>Music</TableHead>
-            <TableHead className="text-right">Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {data?.data.map((music) => (
-            <TableRow
-              key={music.id}
-              className={`text-white ${youTubeId && selectedMusic == music.id ? 'bg-[#972e2e]' : 'bg-[#111111]'}`}
-            >
-              <TableCell>
-                {(!youTubeId || (youTubeId && selectedMusic != music.id)) && (
-                  <GhostButton
-                    onClick={() => {
-                      setYouTubeId(music.youtube_id)
-                      setSelectedMusic(music.id)
-                      setSelectedNameMusic(music.name)
-                    }}
-                  >
-                    <Play className="h-5 w-5" />
-                  </GhostButton>
-                )}
-                {youTubeId && selectedMusic == music.id && (
-                  <GhostButton
-                    onClick={() => {
-                      setYouTubeId(null)
-                      setSelectedMusic(0)
-                      setSelectedNameMusic(null)
-                    }}
-                  >
-                    <StopCircle className="h-5 w-5" />
-                  </GhostButton>
-                )}
-              </TableCell>
-              <TableCell>
-                <Image
-                  src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${music.thumbnail}`}
-                  alt={`${music.name}`}
-                  width={65}
-                  height={65}
-                />
-              </TableCell>
-              <TableCell>{music.artist}</TableCell>
-              <TableCell>{music.name}</TableCell>
-              <TableCell className="text-right">
-                <GhostButton
-                  onClick={() => {
-                    setDataToUpdate(music)
-                    router.push(`/${music.id}/update`)
-                  }}
-                >
-                  <Pencil className="h-4 w-4" />
-                </GhostButton>
-                <GhostButton onClick={() => handleDeleteMusic(music.id)}>
-                  <Trash2 className="h-4 w-4" />
-                </GhostButton>
-              </TableCell>
+      <div className="flex-1 overflow-hidden overflow-y-auto scrollbar-style">
+        <Table className="h-full">
+          {!data?.data && !error && (
+            <TableCaption className="text-[#acacac]">{`You don't have a music on your album yet`}</TableCaption>
+          )}
+          <TableHeader>
+            <TableRow className="text-[#acacac]">
+              <TableHead className="w-[40px] text-center">#</TableHead>
+              <TableHead className="w-[100px]">Thumbnail</TableHead>
+              <TableHead>Artist</TableHead>
+              <TableHead>Music</TableHead>
+              <TableHead className="text-right">Actions</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody className="overflow-y-auto">
+            {data?.data.map((music) => (
+              <TableRow
+                key={music.id}
+                className={`text-white ${youTubeId && selectedMusic == music.id ? 'bg-[#972e2e]' : 'bg-[#111111]'}`}
+              >
+                <TableCell>
+                  {(!youTubeId || (youTubeId && selectedMusic != music.id)) && (
+                    <GhostButton
+                      onClick={() => {
+                        setYouTubeId(music.youtube_id)
+                        setSelectedMusic(music.id)
+                        setSelectedNameMusic(music.name)
+                      }}
+                    >
+                      <Play className="h-5 w-5" />
+                    </GhostButton>
+                  )}
+                  {youTubeId && selectedMusic == music.id && (
+                    <GhostButton
+                      onClick={() => {
+                        setYouTubeId(null)
+                        setSelectedMusic(0)
+                        setSelectedNameMusic(null)
+                      }}
+                    >
+                      <StopCircle className="h-5 w-5" />
+                    </GhostButton>
+                  )}
+                </TableCell>
+                <TableCell>
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${music.thumbnail}`}
+                    alt={`${music.name}`}
+                    width={65}
+                    height={65}
+                  />
+                </TableCell>
+                <TableCell>{music.artist}</TableCell>
+                <TableCell>{music.name}</TableCell>
+                <TableCell className="text-right">
+                  <GhostButton
+                    onClick={() => {
+                      setDataToUpdate(music)
+                      router.push(`/${music.id}/update`)
+                    }}
+                  >
+                    <Pencil className="h-4 w-4" />
+                  </GhostButton>
+                  <GhostButton onClick={() => handleDeleteMusic(music.id)}>
+                    <Trash2 className="h-4 w-4" />
+                  </GhostButton>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   )
 }
