@@ -63,7 +63,7 @@ export default function Home() {
       </div>
       <div className="flex-1 overflow-hidden overflow-y-auto scrollbar-style">
         <Table className="h-full">
-          {!data?.data && !error && (
+          {!data?.data.length && !error && (
             <TableCaption className="text-[#acacac]">{`You don't have a music on your album yet`}</TableCaption>
           )}
           <TableHeader>
