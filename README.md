@@ -39,6 +39,7 @@ Gerencie as suas músicas favoritas em apenas um lugar. Cadastre quantas música
 
 ### Front-end:
 * Next.JS
+* TypeScript
 * Tailwind CSS e Shadcn/ui
 * Formulários com React Hook Form e Zod para validação
 * TanStack Query para consumo de APIs
