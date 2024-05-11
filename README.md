@@ -133,6 +133,10 @@ NEXT_PUBLIC_API_URL='http://localhost:8000' (Ou outra porta que seu servidor est
 
 ## Vídeo de apresentação
 
+
+https://github.com/TeuSoares/music-website/assets/70549313/47331e70-2026-4685-b40b-c3c0a520a106
+
+
 ## Autor
 
 * **Mateus Soares** [Linkedin](https://www.linkedin.com/in/mateus-soares-santos/)
