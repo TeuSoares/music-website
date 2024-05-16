@@ -44,14 +44,14 @@ Gerencie as suas músicas favoritas em apenas um lugar. Cadastre quantas música
 * Formulários com React Hook Form e Zod para validação
 * TanStack Query para consumo de APIs
 * Context API para gerenciamento de estados
-* Jest e Testing Library para criação de testes unitários
+* Testes unitários com Jest e Testing Library
   
 ### Back-end
 * PHP 8.2
 * Laravel 10
 * MySQL
 * Sistema de autenticação com Laravel Sanctum
-* Testes automatizados
+* Testes de integração com PHP Unit
 * Metodologia Domain-Driven Design (DDD)
 
 ## Funcionalidades
