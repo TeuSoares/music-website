@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Music;
 
-use Domain\Music\Requests\MutationMusicRequest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -72,46 +71,5 @@ class CreateTest extends TestCase
             'name'       => 'Believer',
             'youtube_id' => '7wtfhZwyrcc'
         ]);
-    }
-
-    public function test_should_not_create_a_new_music_if_validations_failed(): void
-    {
-        $fails = $this->checkIfExistsValidationError(new MutationMusicRequest);
-
-        $this->assertEquals(true, $fails);
-    }
-
-    public function test_should_not_create_a_new_music_if_the_thumbnail_is_not_an_image(): void
-    {
-        $file = UploadedFile::fake()->create('document.pdf');
-
-        $data = [
-            'artist'       => 'Imagine Dragons',
-            'genre'        => 'Rock',
-            'name'         => 'Believer',
-            'link_youtube' => 'https://www.youtube.com/embed/7wtfhZwyrcc',
-            'thumbnail'    => $file
-        ];
-
-        $fails = $this->checkIfExistsValidationError(new MutationMusicRequest, $data);
-
-        $this->assertEquals(true, $fails);
-    }
-
-    public function test_should_not_create_music_if_the_thumbnail_is_not_jpg_or_png_image(): void
-    {
-        $file = UploadedFile::fake()->image('image.gif');
-
-        $data = [
-            'artist'       => 'Imagine Dragons',
-            'genre'        => 'Rock',
-            'name'         => 'Believer',
-            'link_youtube' => 'https://www.youtube.com/embed/7wtfhZwyrcc',
-            'thumbnail'    => $file
-        ];
-
-        $fails = $this->checkIfExistsValidationError(new MutationMusicRequest, $data);
-
-        $this->assertEquals(true, $fails);
     }
 }

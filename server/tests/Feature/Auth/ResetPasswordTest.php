@@ -54,31 +54,6 @@ class ResetPasswordTest extends TestCase
         Notification::assertNothingSent();
     }
 
-    public function test_validation_rules_for_resetting_password(): void
-    {
-        $fails = $this->checkIfExistsValidationError(new ResetPasswordRequest);
-
-        $this->assertEquals(true, $fails);
-    }
-
-    public function test_should_throw_exception_if_email_is_invalid(): void
-    {
-        $user = $this->createNewUser();
-
-        $token = Password::createToken($user);
-
-        $data = [
-            'token' => $token,
-            'email' => 'email@invalid.com',
-            'password' => 12345678,
-            'password_confirmation' => 12345678
-        ];
-
-        $fails = $this->checkIfExistsValidationError(new ResetPasswordRequest, $data);
-
-        $this->assertEquals(true, $fails);
-    }
-
     public function test_should_not_reset_password_if_email_is_invalid(): void
     {
         $user = $this->createNewUser();

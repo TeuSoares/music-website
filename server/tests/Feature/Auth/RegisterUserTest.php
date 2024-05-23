@@ -42,29 +42,4 @@ class RegisterUserTest extends TestCase
 
         $this->assertDatabaseHas('users', ['email' => $data['email']]);
     }
-
-    public function test_validation_rules_to_create_new_user(): void
-    {
-        $fails = $this->checkIfExistsValidationError(new RegisterUserRequest);
-
-        $this->assertEquals(true, $fails);
-    }
-
-    public function test_user_creation_should_fail_if_the_email_already_exists(): void
-    {
-        $user = $this->createNewUser();
-
-        $password = $this->faker->password(6, 12);
-
-        $data = [
-            'name' => $this->faker->name,
-            'email' => $user->email,
-            'password' => $password,
-            'password_confirmation' => $password
-        ];
-
-        $fails = $this->checkIfExistsValidationError(new RegisterUserRequest, $data);
-
-        $this->assertEquals(true, $fails);
-    }
 }

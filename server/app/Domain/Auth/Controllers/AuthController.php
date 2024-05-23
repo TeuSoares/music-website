@@ -10,7 +10,6 @@ use Domain\Auth\Requests\RegisterUserRequest;
 use Domain\Auth\Requests\ResetPasswordRequest;
 use Domain\Auth\Services\AuthService;
 
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 

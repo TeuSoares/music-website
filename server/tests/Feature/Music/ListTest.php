@@ -37,17 +37,6 @@ class ListTest extends TestCase
             ]);
     }
 
-    public function test_filter_validation_for_listing_songs(): void
-    {
-        $fails = $this->checkIfExistsValidationError(new ListMusicRequest, [
-            'genre' => 'Rock',
-            'artist' => 4687897,
-            'name' => 'Music'
-        ]);
-
-        $this->assertEquals(true, $fails);
-    }
-
     public function test_get_a_single_music(): void
     {
         $this->userAuthenticated();

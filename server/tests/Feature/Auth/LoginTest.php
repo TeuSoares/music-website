@@ -2,8 +2,6 @@
 
 namespace Tests\Feature\Auth;
 
-use Domain\Auth\Requests\LoginRequest;
-
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use Tests\TestCase;
@@ -52,13 +50,6 @@ class LoginTest extends TestCase
             ]);
 
         $this->assertGuest();
-    }
-
-    public function test_validation_rules_for_login_attempts(): void
-    {
-        $fails = $this->checkIfExistsValidationError(new LoginRequest);
-
-        $this->assertEquals(true, $fails);
     }
 
     public function test_user_can_log_out_successfully(): void

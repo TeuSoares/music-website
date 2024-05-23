@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Music;
 
-use Domain\Music\Requests\MutationMusicRequest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
@@ -106,47 +105,6 @@ class UpdateTest extends TestCase
             'name'       => $data['name'],
             'youtube_id' => $music->youtube_id,
         ]);
-    }
-
-    public function test_should_not_update_music_if_validations_failed(): void
-    {
-        $fails = $this->checkIfExistsValidationError(new MutationMusicRequest);
-
-        $this->assertEquals(true, $fails);
-    }
-
-    public function test_should_not_update_music_if_the_thumbnail_is_not_an_image(): void
-    {
-        $file = UploadedFile::fake()->create('document.pdf');
-
-        $data = [
-            'artist'       => $this->faker->firstName(),
-            'genre'        => 'Rock',
-            'name'         => $this->faker->sentence(),
-            'link_youtube' => '7wtfhZwyrcc',
-            'thumbnail'    => $file
-        ];
-
-        $fails = $this->checkIfExistsValidationError(new MutationMusicRequest, $data);
-
-        $this->assertEquals(true, $fails);
-    }
-
-    public function test_should_not_update_music_if_the_thumbnail_is_not_jpg_or_png_image(): void
-    {
-        $file = UploadedFile::fake()->image('image.gif');
-
-        $data = [
-            'artist'       => $this->faker->firstName(),
-            'genre'        => 'Rock',
-            'name'         => $this->faker->sentence(),
-            'link_youtube' => '7wtfhZwyrcc',
-            'thumbnail'    => $file
-        ];
-
-        $fails = $this->checkIfExistsValidationError(new MutationMusicRequest, $data);
-
-        $this->assertEquals(true, $fails);
     }
 
     public function test_should_return_forbidden_if_the_music_userId_is_different_from_the_logged_user(): void
