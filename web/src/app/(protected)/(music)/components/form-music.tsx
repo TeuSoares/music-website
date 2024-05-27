@@ -27,13 +27,13 @@ const FormMusic = ({ onSubmit, data, id }: FormMusicProps) => {
     <Center>
       <Card className="min-[450px]:w-[450px]">
         <CardForm
-          title={data ? `Update Music #${id}` : 'Add Music'}
+          title={id ? `Update Music #${id}` : 'Add Music'}
           description={
-            data
+            id
               ? 'Update the music and keep listening'
               : 'Add a music to your playlist.'
           }
-          textButton={data ? 'Update Music' : 'Add Music'}
+          textButton={id ? 'Update Music' : 'Add Music'}
           formSchema={formSchema}
           onSubmit={onSubmit}
           defaultValues={{
