@@ -8,12 +8,19 @@ interface Props extends ButtonProps, ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode
   onClick?: () => void
   className?: string
+  testid?: string
 }
 
-const GhostButton = ({ children, onClick, className = '' }: Props) => {
+const GhostButton = ({
+  children,
+  onClick,
+  className = '',
+  testid = '',
+}: Props) => {
   return (
     <Button
       variant="ghost"
+      data-testid={testid}
       size="icon"
       className={`hover:bg-[#BC2627] hover:text-white ${className}`}
       onClick={onClick}

@@ -40,7 +40,7 @@ export default function Home() {
         <div className="bg-[#111111] p-1 w-full text-center border-b-2 border-white">
           <div className="flex justify-center items-center text-white font-bold gap-2">
             {selectedNameMusic && <Music />}
-            <h1>
+            <h1 data-testid="music-title">
               {selectedNameMusic ?? 'Choose a music would you like to hear'}
             </h1>
           </div>
@@ -54,6 +54,7 @@ export default function Home() {
         )}
         {youTubeId && (
           <iframe
+            title="YouTube video player"
             width="100%"
             height="100%"
             className="rounded-md"
@@ -84,6 +85,7 @@ export default function Home() {
                 <TableCell>
                   {(!youTubeId || (youTubeId && selectedMusic != music.id)) && (
                     <GhostButton
+                      testid={`button-play-${music.id}`}
                       onClick={() => {
                         setYouTubeId(music.youtube_id)
                         setSelectedMusic(music.id)
@@ -95,6 +97,7 @@ export default function Home() {
                   )}
                   {youTubeId && selectedMusic == music.id && (
                     <GhostButton
+                      testid={`button-stop-${music.id}`}
                       onClick={() => {
                         setYouTubeId(null)
                         setSelectedMusic(0)
@@ -117,6 +120,7 @@ export default function Home() {
                 <TableCell>{music.name}</TableCell>
                 <TableCell className="text-right">
                   <GhostButton
+                    testid={`button-edit-${music.id}`}
                     onClick={() => {
                       setDataToUpdate(music)
                       router.push(`/${music.id}/update`)
@@ -124,7 +128,10 @@ export default function Home() {
                   >
                     <Pencil className="h-4 w-4" />
                   </GhostButton>
-                  <GhostButton onClick={() => handleDeleteMusic(music.id)}>
+                  <GhostButton
+                    testid={`button-delete-${music.id}`}
+                    onClick={() => handleDeleteMusic(music.id)}
+                  >
                     <Trash2 className="h-4 w-4" />
                   </GhostButton>
                 </TableCell>
