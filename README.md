@@ -51,7 +51,7 @@ Gerencie as suas músicas favoritas em apenas um lugar. Cadastre quantas música
 * Laravel 10
 * MySQL
 * Sistema de autenticação com Laravel Sanctum
-* Testes de integração com PHP Unit
+* Testes unitários e integração com PHP Unit
 * Metodologia Domain-Driven Design (DDD)
 
 ## Funcionalidades
