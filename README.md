@@ -45,6 +45,7 @@ Gerencie as suas músicas favoritas em apenas um lugar. Cadastre quantas música
 * TanStack Query para consumo de APIs
 * Context API para gerenciamento de estados
 * Testes unitários com Jest e Testing Library
+* Testes End-to-End com Cypress
   
 ### Back-end
 * PHP 8.2
