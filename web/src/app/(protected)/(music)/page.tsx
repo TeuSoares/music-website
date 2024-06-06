@@ -47,9 +47,7 @@ export default function Home() {
         </div>
         {!youTubeId && (
           <div className="h-full bg-banner bg-cover bg-center">
-            <div className="h-full flex justify-center items-center bg-gradient-to-r from-black/80 to-black/50">
-              <h2 className="text-white font-bold"></h2>
-            </div>
+            <div className="h-full flex justify-center items-center bg-gradient-to-r from-black/80 to-black/50"></div>
           </div>
         )}
         {youTubeId && (

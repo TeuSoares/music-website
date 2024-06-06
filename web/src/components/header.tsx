@@ -16,6 +16,7 @@ const Header = () => {
       <Button
         className="bg-transparent hover:bg-transparent text-white font-bold hover:text-[#BC2627]"
         onClick={handleLogout}
+        data-testid="logout-button"
       >
         Logout
       </Button>
