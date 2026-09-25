@@ -1,92 +1,104 @@
-# Gerenciador de Músicas
+# Music Management Website
 
-Gerencie as suas músicas favoritas em apenas um lugar. Cadastre quantas músicas quiser e ouça em qualquer momento, de onde estiver.
+Manage your favorite songs in one place. Add as many songs as you want and listen to them whenever you want, from anywhere.
 
-## Telas do projeto
+## Project Screens
 
 ### 1 - Home
-> Home ao carregar a página
 
-![Home Padrão](https://i.imgur.com/DwEQwiq.png)
+> Home page when loading the application
 
-> Home ao selecionar uma música para ouvir
+![Default Home](https://i.imgur.com/DwEQwiq.png)
 
-![Home ao selecionar uma música](https://i.imgur.com/vmVqjgr.png)
+> Home page when selecting a song to play
 
-### 2 - Autenticação
-> Tela de login
+![Home when selecting a song](https://i.imgur.com/vmVqjgr.png)
+
+### 2 - Authentication
+
+> Login screen
 
 ![Login](https://i.imgur.com/J72TC6H.png)
 
-> Formulário de cadastro de usuário
+> User registration form
 
-![Cadastro de usuários](https://i.imgur.com/4QuAHKa.png)
+![User Registration](https://i.imgur.com/4QuAHKa.png)
 
-> Esqueci a senha
+> Forgot password
 
-![Esqueci a senha](https://i.imgur.com/MOQDA3E.png)
+![Forgot Password](https://i.imgur.com/MOQDA3E.png)
 
-### 3 - Formulários de cadastro e edição de músicas
-> Formulário para inserir novas músicas
+### 3 - Song Registration and Editing Forms
 
-![Inserir novas músicas](https://i.imgur.com/E7GL4Em.png)
+> Form for adding new songs
 
-> Formulário para editar uma música
+![Add New Songs](https://i.imgur.com/E7GL4Em.png)
 
-![Atualizar música](https://i.imgur.com/NgBtpNo.png)
+> Form for editing a song
 
-## O que foi utilizado
+![Update Song](https://i.imgur.com/NgBtpNo.png)
+
+## Technologies Used
 
 ### Front-end:
-* Next.JS
+
+* Next.js
 * TypeScript
-* Tailwind CSS e Shadcn/ui
-* Formulários com React Hook Form e Zod para validação
-* TanStack Query para consumo de APIs
-* Context API para gerenciamento de estados
-* Testes unitários com Jest e Testing Library
-* Testes End-to-End com Cypress
-  
-### Back-end
+* Tailwind CSS and Shadcn/ui
+* Forms with React Hook Form and Zod for validation
+* TanStack Query for API consumption
+* Context API for state management
+* Unit tests with Jest and Testing Library
+* End-to-End testing with Cypress
+
+### Back-end:
+
 * PHP 8.2
 * Laravel 10
 * MySQL
-* Sistema de autenticação com Laravel Sanctum
-* Testes unitários e integração com PHP Unit
-* Metodologia Domain-Driven Design (DDD)
+* Authentication with Laravel Sanctum
+* Unit and integration tests with PHPUnit
+* Domain-Driven Design (DDD)
 
-## Funcionalidades
-* [x] Autenticação e cadastro de usuário
-* [x] Recuperar a senha
-* [x] Validação de e-mail
-* [x] Cadastro de novas músicas
-* [x] Excluir uma música
-* [x] Atualizar uma música
+## Features
 
-## Como rodar
+* [x] User authentication and registration
+* [x] Password recovery
+* [x] Email verification
+* [x] Add new songs
+* [x] Delete a song
+* [x] Update a song
 
-#### Pré-Requisitos
+## How to Run
+
+#### Prerequisites
+
 * Node
 * PHP 8.2
 * MySQL
 * Composer
-  
-#### Antes de tudo, clone este repositório
+
+#### First, clone this repository
+
 ```bash
     git clone https://github.com/TeuSoares/music-website.git
 ```
 
-#### Configurando servidor 👇
-1. Instale as dependências dentro da pasta server
+#### Setting up the server 👇
+
+1. Install the dependencies inside the server folder:
+
 ```bash
     composer install
 ```
 
-2. Crie o arquivo `.env` e configure as varíaveis necessárias
+2. Create the `.env` file and configure the required variables:
+
 ```bash
     cp .env.example .env
 ```
-```
+
+```text
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
@@ -94,7 +106,8 @@ DB_DATABASE=
 DB_USERNAME=
 DB_PASSWORD=
 ```
-```
+
+```text
 MAIL_MAILER=
 MAIL_HOST=
 MAIL_PORT=
@@ -103,50 +116,56 @@ MAIL_PASSWORD=
 MAIL_ENCRYPTION=
 ```
 
-3. Execute os comandos: `php artisan key:generate` e `php artisan config:cache`
+3. Run the following commands: `php artisan key:generate` and `php artisan config:cache`
 
-4. Após criar seu banco de dados e configura-lo no .env, você pode fazer a migração das tabelas necessárias. Para isso rode o comando `php artisan migrate`
-   
-5. Para iniciar o servidor rode: `php artisan serve`
+4. After creating your database and configuring it in the `.env` file, you can run the database migrations. To do so, run:
+   `php artisan migrate`
 
-#### Inicializando o front-end 👇
-1. Acesse a pasta web
+5. Start the server:
+   `php artisan serve`
+
+#### Starting the front-end 👇
+
+1. Access the web folder:
+
 ```bash
     cd web
 ```
 
-2. Instalando dependências
+2. Install the dependencies:
+
 ```bash
     npm install
 ```
 
-3. Configure o .env
+3. Configure the `.env` file:
+
 ```bash
     cp .env.example .env
 ```
-```
-NEXT_PUBLIC_API_URL='http://localhost:8000' (Ou outra porta que seu servidor estiver rodando)
+
+```text
+NEXT_PUBLIC_API_URL='http://localhost:8000' (Or another port where your server is running)
 ```
 
-4. Inicializar projeto
+4. Start the project:
+
 ```bash
     npm run dev
 ```
 
-## Vídeo de apresentação
-
+## Project Presentation Video
 
 https://github.com/TeuSoares/music-website/assets/70549313/47331e70-2026-4685-b40b-c3c0a520a106
 
+## Author
 
-## Autor
+* **Mateus Soares** [LinkedIn](https://www.linkedin.com/in/mateus-soares-santos/)
 
-* **Mateus Soares** [Linkedin](https://www.linkedin.com/in/mateus-soares-santos/)
-
-## Versão
+## Version
 
 1.0.0
 
-## Licença
+## License
 
-Este projeto está licenciado sob a Licença MIT.
+This project is licensed under the MIT License.
